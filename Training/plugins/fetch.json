@@ -7,8 +7,8 @@
     },
     "org.apache.cordova.geolocation": {
         "source": {
-            "type": "registry",
-            "id": "org.apache.cordova.geolocation"
+            "type": "local",
+            "path": "C:\\org.apache.cordova.geolocation"
         }
     }
 }

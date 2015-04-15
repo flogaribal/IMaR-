@@ -7,17 +7,11 @@
         <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
-        <title>Trainings ! </title>
-		<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-        <script type="text/javascript" charset="utf-8" src="js/index.js"></script>
+        <title>Trainings ! </title>    
     </head>
-    <body>
-        <h1>Accelerometer and GPS tests</h1>
-
+    <body> 
+        <h1>Accelerometer test</h1>
         <div style="text-align:center">
-            <button id="btn_getPosition" type="button" onclick="btn_getPosition()">
-                Get GPS position
-            </button>
             <button id="btn_getAccel" type="button" onclick="getAcceleration()">
                 Get Accel
             </button>
@@ -30,13 +24,6 @@
             <p id="accelZ">Acceleration Z :</p>
         </div>
 
-        <h2>GPS : </h2>
-        <div class="values">
-            <p id="latitude">Latitute :  </p>
-            <p id="longitude">Longitude :  </p>
-            <p id="altitude">Altitude :  </p>
-        </div>
-
         <nav id = "buttons" class="footer">
             <button id="btn_startWatch" type="button" onclick="startWatch()">
                 Start watching acceloremeter
@@ -45,5 +32,7 @@
                 Stop watching
             </button>
         </nav>
+        <script type="text/javascript" charset="utf-8" src="js/index.js"></script>
+        <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
     </body>
 </html>
