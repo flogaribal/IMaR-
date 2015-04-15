@@ -61,6 +61,8 @@ function onSuccess(position) {
     document.getElementById('latitude').textContent = 'Latitute : ' + position.coords.latitude ;
     document.getElementById('longitude').textContent = 'Longitude : ' + position.coords.longitude ;
     document.getElementById('altitude').textContent = 'Altitude: ' + position.coords.altitude ;
+	
+	gotFileWriter(writer);
 }
 
 // onError Callback receives a PositionError object
