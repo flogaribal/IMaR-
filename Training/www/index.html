@@ -37,7 +37,7 @@
             //
             function startWatch() {
 				// Update acceleration every second                var options = { frequency: 1000 };
-                watchID = navigator.accelerometer.watchAcceleration(onSuccess, onError, options);
+                watchID = navigator.accelerometer.watchAcceleration(onSuccessAccel, onError, options);
                 alert('starting watch');
             }
 
@@ -53,18 +53,13 @@
 
             // onSuccess: Get a snapshot of the current acceleration
             //
-            function onSuccess(acceleration) {
+            function onSuccessAccel(acceleration) {
                 alert('X : ' + acceleration.x + 'Y : ' + acceleration.y + 'Z : ' + acceleration.z );
                 document.getElementById('accelX').textContent = 'Acceleration X: ' + acceleration.x + '<br />';
 				document.getElementById('accelY').textContent = 'Acceleration Y: ' + acceleration.y + '<br />';
 				document.getElementById('accelZ').textContent = 'Acceleration Z: ' + acceleration.z + '<br />';
             }
 
-            // onError: Failed to get the acceleration
-            //
-            function onError() {
-                alert('onError!');
-            }
         </script>
 
         <h1>Accelerometer and GPS tests</h1>
