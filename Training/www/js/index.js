@@ -41,9 +41,9 @@ function stopWatch() {
 //
 function onSuccessAccel(acceleration) {
     alert('X : ' + acceleration.x + 'Y : ' + acceleration.y + 'Z : ' + acceleration.z );
-    document.getElementById('accelX').textContent = 'Acceleration X: ' + acceleration.x + '<br />';
-    document.getElementById('accelY').textContent = 'Acceleration Y: ' + acceleration.y + '<br />';
-    document.getElementById('accelZ').textContent = 'Acceleration Z: ' + acceleration.z + '<br />';
+    document.getElementById('accelX').innerHTML = 'Acceleration X: ' + acceleration.x + '<br />';
+    document.getElementById('accelY').innerHTML = 'Acceleration Y: ' + acceleration.y + '<br />';
+    document.getElementById('accelZ').innerHTML = 'Acceleration Z: ' + acceleration.z + '<br />';
 }
 
 
