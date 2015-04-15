@@ -102,6 +102,7 @@ function gotFileEntry(fileEntry) {
 	fileEntry.createWriter(gotFileWriter, fail);
 }
 
+
 function gotFileWriter(fileWriter) {
 	file.writer.available = true;
 	file.writer.object = fileWriter;
