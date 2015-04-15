@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
+        <title>Trainings ! </title>
+    </head>
+    <body>
+        <script type="text/javascript">
+            // Wait for device API libraries to load
+            //
+            document.addEventListener("deviceready", onDeviceReady, false);
+
+            // device APIs are available
+            //
+            function onDeviceReady() {
+                navigator.geolocation.getCurrentPosition(onSuccess, onError);
+                alert('deviceReady');
+            }
+
+            // onSuccess Geolocation
+            //
+            function onSuccess(position) {
+                alert('GPS...');
+                alert('Latitude: '           + position.coords.latitude              + '<br />' +
+                                    'Longitude: '          + position.coords.longitude             + '<br />' +
+                                    'Altitude: '           + position.coords.altitude              + '<br />' +
+                                    'Accuracy: '           + position.coords.accuracy              + '<br />' +
+                                    'Altitude Accuracy: '  + position.coords.altitudeAccuracy      + '<br />' +
+                                    'Heading: '            + position.coords.heading               + '<br />' +
+                                    'Speed: '              + position.coords.speed                 + '<br />' +
+                                    'Timestamp: '          + position.timestamp                    + '<br />');
+            }
+
+            // onError Callback receives a PositionError object
+            //
+            function onError(error) {
+                alert('code: '    + error.code    + '\n' +
+                      'message: ' + error.message + '\n');
+            }
+        </script>
+
+        <h1>Acceloremeter and GPS tests</h1>
+
+        <div style="text-align:center">
+            <button type="button">
+                Get GPS position
+            </button>
+        </div>
+
+        <div class="valAccel">
+            <p id="accelX">X :  </p>
+            <p id="accelY">Y :  </p>
+            <p id="accelZ">Z :  </p>
+        </div>
+
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+    </body>
+</html>
