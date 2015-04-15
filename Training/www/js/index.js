@@ -9,6 +9,7 @@ document.addEventListener("deviceready", onDeviceReady, false);
 //
 function onDeviceReady() {
     alert('deviceReady');
+	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
     startWatch();
 }
 
@@ -71,4 +72,25 @@ function onError(error) {
 
 
 // ______ FILE _________
+function gotFS(fileSystem) {
+	fileSystem.root.getFile("TestingLog.txt", {create: true, exclusive: false}, gotFileEntry, fail);
+}
 
+function gotFileEntry(fileEntry) {
+	fileEntry.createWriter(gotFileWriter, fail);
+}
+
+function gotFileWriter(writer) {
+	writer.seek(writer.length);
+	writer.write(document.getElementById('latitude').textContent);
+	
+	writer.seek(writer.length);
+	writer.write(document.getElementById('longitude').textContent);
+	
+	writer.seek(writer.length);
+	writer.write(document.getElementById('altitude').textContent);
+}
+
+function fail(error) {
+	console.log(error.code);
+}
