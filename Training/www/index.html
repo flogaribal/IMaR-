@@ -12,61 +12,14 @@
         <script type="text/javascript" charset="utf-8" src="js/index.js"></script>
     </head>
     <body>
-        <script type="text/javascript" charset="utf-8">
-            // The watch id references the current `watchAcceleration`
-            var watchID = null;
-
-            // Wait for device API libraries to load
-            //
-			function onLoad() {
-				document.addEventListener("deviceready", onDeviceReady, false);
-			}
-
-            // device APIs are available
-            //
-            function onDeviceReady() {
-                alert('deviceReady');
-                startWatch();
-            }
-			
-			function getAcceleration() {
-				navigator.accelerometer.getCurrentAcceleration(onSuccess, onError);
-			}
-
-            // Start watching the acceleration
-            //
-            function startWatch() {
-				// Update acceleration every second                var options = { frequency: 1000 };
-                watchID = navigator.accelerometer.watchAcceleration(onSuccessAccel, onError, options);
-                alert('starting watch');
-            }
-
-            // Stop watching the acceleration
-            //
-            function stopWatch() {
-                if (watchID) {
-                    navigator.accelerometer.clearWatch(watchID);
-                    alert('stopping watch');
-                    watchID = null;
-                }
-            }
-
-            // onSuccess: Get a snapshot of the current acceleration
-            //
-            function onSuccessAccel(acceleration) {
-                alert('X : ' + acceleration.x + 'Y : ' + acceleration.y + 'Z : ' + acceleration.z );
-                document.getElementById('accelX').textContent = 'Acceleration X: ' + acceleration.x + '<br />';
-				document.getElementById('accelY').textContent = 'Acceleration Y: ' + acceleration.y + '<br />';
-				document.getElementById('accelZ').textContent = 'Acceleration Z: ' + acceleration.z + '<br />';
-            }
-
-        </script>
-
         <h1>Accelerometer and GPS tests</h1>
 
         <div style="text-align:center">
             <button id="btn_getPosition" type="button" onclick="btn_getPosition()">
                 Get GPS position
+            </button>
+            <button id="btn_getPosition" type="button" onclick="getAcceleration()">
+                Get Accel
             </button>
         </div>
 
