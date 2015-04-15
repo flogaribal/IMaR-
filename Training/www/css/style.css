@@ -37,6 +37,10 @@ h1 {
     text-align:center;
 }
 
-.valAccel{
-    text-align: center;
+h2{
+    margin-left: 10px;
+}
+
+.values{
+    margin-left: 50px;
 }

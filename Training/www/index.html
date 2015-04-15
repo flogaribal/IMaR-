@@ -68,16 +68,23 @@
         <h1>Accelerometer and GPS tests</h1>
 
         <div style="text-align:center">
-            <button type="button">
+            <button id="btn_getPosition" type="button" onclick="btn_getPosition()">
                 Get GPS position
             </button>
         </div>
 
-        <div id="valAccel">
-
+        <h2> Accelerometer : </h2>
+        <div id="values">
             <p id="accelX"></p>
             <p id="accelY"></p>
             <p id="accelZ"></p>
+        </div>
+
+        <h2>GPS : </h2>
+        <div class="values">
+            <p id="latitude">Latitute :  </p>
+            <p id="longitude">Longitude :  </p>
+            <p id="altitude">Altitude :  </p>
         </div>
 
         <script type="text/javascript" src="cordova.js"></script>
