@@ -15,16 +15,14 @@ function onDeviceReady() {
 // ____________________ ACCELEROMETER _____________
 function getAcceleration() {
     navigator.accelerometer.getCurrentAcceleration(onSuccessAccel, onError);
-    alert('gettint Accel');
 }
 
 // Start watching the acceleration
 //
 function startWatch() {
     // Update acceleration every second     
-    var options = { frequency: 1000 };
+    var options = { frequency: 200 };
     watchID = navigator.accelerometer.watchAcceleration(onSuccessAccel, onError, options);
-    alert('starting watch');
 }
 
 // Stop watching the acceleration
@@ -40,10 +38,9 @@ function stopWatch() {
 // onSuccess: Get a snapshot of the current acceleration
 //
 function onSuccessAccel(acceleration) {
-    alert('X : ' + acceleration.x + 'Y : ' + acceleration.y + 'Z : ' + acceleration.z );
-    document.getElementById('accelX').innerHTML = 'Acceleration X: ' + acceleration.x + '<br />';
-    document.getElementById('accelY').innerHTML = 'Acceleration Y: ' + acceleration.y + '<br />';
-    document.getElementById('accelZ').innerHTML = 'Acceleration Z: ' + acceleration.z + '<br />';
+    document.getElementById('accelX').innerHTML = 'Acceleration X : ' + acceleration.x;
+    document.getElementById('accelY').innerHTML = 'Acceleration Y : ' + acceleration.y;
+    document.getElementById('accelZ').innerHTML = 'Acceleration Z : ' + acceleration.z;
 }
 
 
@@ -51,21 +48,14 @@ function onSuccessAccel(acceleration) {
 //________________ GPS __________________
 
 function btn_getPosition(){
+    alert('getting position');
     navigator.geolocation.getCurrentPosition(onSuccess, onError);
 }
 
 // onSuccess Geolocation
 //
 function onSuccess(position) {
-
-/*    alert('Latitude: '           + position.coords.latitude              + '<br />' +
-                        'Longitude: '          + position.coords.longitude             + '<br />' +
-                        'Altitude: '           + position.coords.altitude              + '<br />' +
-                        'Accuracy: '           + position.coords.accuracy              + '<br />' +
-                        'Altitude Accuracy: '  + position.coords.altitudeAccuracy      + '<br />' +
-                        'Heading: '            + position.coords.heading               + '<br />' +
-                        'Speed: '              + position.coords.speed                 + '<br />' +
-                        'Timestamp: '          + position.timestamp                    + '<br />');*/
+    alert('Lat ' + position.coords.latitude);
 
     document.getElementById('latitude').textContent = 'Latitute : ' + position.coords.latitude ;
     document.getElementById('longitude').textContent = 'Longitude : ' + position.coords.longitude ;
