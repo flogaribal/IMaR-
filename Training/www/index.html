@@ -16,7 +16,9 @@
 
             // Wait for device API libraries to load
             //
-            document.addEventListener("deviceready", onDeviceReady, false);
+			function onLoad() {
+				document.addEventListener("deviceready", onDeviceReady, false);
+			}
 
             // device APIs are available
             //
@@ -24,13 +26,15 @@
                 alert('deviceReady');
                 startWatch();
             }
+			
+			function getAcceleration() {
+				navigator.accelerometer.getCurrentAcceleration(onSuccess, onError);
+			}
 
             // Start watching the acceleration
             //
             function startWatch() {
-
-                // Update acceleration every 1 seconds
-                var options = { frequency: 1000 };
+				// Update acceleration every second                var options = { frequency: 1000 };
                 watchID = navigator.accelerometer.watchAcceleration(onSuccess, onError, options);
                 alert('starting watch');
             }
@@ -70,9 +74,10 @@
         </div>
 
         <div id="valAccel">
-            <p id="accelX">Acceleration X :  </p>
-            <p id="accelY">Acceleration Y :  </p>
-            <p id="accelZ">Acceleration Z :  </p>
+
+            <p id="accelX"></p>
+            <p id="accelY"></p>
+            <p id="accelZ"></p>
         </div>
 
         <script type="text/javascript" src="cordova.js"></script>
