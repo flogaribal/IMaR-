@@ -10,54 +10,26 @@
         <title>Trainings ! </title>
     </head>
     <body>
-        <script type="text/javascript">
-            // Wait for device API libraries to load
-            //
-            document.addEventListener("deviceready", onDeviceReady, false);
-
-            // device APIs are available
-            //
-            function onDeviceReady() {
-                navigator.geolocation.getCurrentPosition(onSuccess, onError);
-                alert('deviceReady');
-            }
-
-            // onSuccess Geolocation
-            //
-            function onSuccess(position) {
-                alert('GPS...');
-                alert('Latitude: '           + position.coords.latitude              + '<br />' +
-                                    'Longitude: '          + position.coords.longitude             + '<br />' +
-                                    'Altitude: '           + position.coords.altitude              + '<br />' +
-                                    'Accuracy: '           + position.coords.accuracy              + '<br />' +
-                                    'Altitude Accuracy: '  + position.coords.altitudeAccuracy      + '<br />' +
-                                    'Heading: '            + position.coords.heading               + '<br />' +
-                                    'Speed: '              + position.coords.speed                 + '<br />' +
-                                    'Timestamp: '          + position.timestamp                    + '<br />');
-            }
-
-            // onError Callback receives a PositionError object
-            //
-            function onError(error) {
-                alert('code: '    + error.code    + '\n' +
-                      'message: ' + error.message + '\n');
-            }
-        </script>
-
-        
-
         <h1>Acceloremeter and GPS tests</h1>
 
         <div style="text-align:center">
-            <button id="btn_getPosition" type="button">
+            <button id="btn_getPosition" type="button" onclick="btn_getPosition()">
                 Get GPS position
             </button>
         </div>
 
-        <div class="valAccel">
+        <h2> Accelerometer : </h2>
+        <div class="values">
             <p id="accelX">X :  </p>
             <p id="accelY">Y :  </p>
             <p id="accelZ">Z :  </p>
+        </div>
+
+        <h2>GPS : </h2>
+        <div class="values">
+            <p id="latitude">Latitute :  </p>
+            <p id="longitude">Longitude :  </p>
+            <p id="altitude">Altitude :  </p>
         </div>
 
         <script type="text/javascript" src="cordova.js"></script>
