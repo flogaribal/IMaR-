@@ -22,7 +22,6 @@
             //
             function onDeviceReady() {
                 alert('deviceReady');
-				//navigator.accelerometer.getCurrentAcceleration(onSuccess, onError);
                 startWatch();
             }
 
@@ -30,10 +29,10 @@
             //
             function startWatch() {
 
-                // Update acceleration every 3 seconds
+                // Update acceleration every 1 seconds
                 var options = { frequency: 1000 };
-                alert('starting watch');
                 watchID = navigator.accelerometer.watchAcceleration(onSuccess, onError, options);
+                alert('starting watch');
             }
 
             // Stop watching the acceleration
@@ -41,6 +40,7 @@
             function stopWatch() {
                 if (watchID) {
                     navigator.accelerometer.clearWatch(watchID);
+                    alert('stopping watch');
                     watchID = null;
                 }
             }
@@ -48,6 +48,7 @@
             // onSuccess: Get a snapshot of the current acceleration
             //
             function onSuccess(acceleration) {
+                alert('X : ' + acceleration.x + 'Y : ' + acceleration.y + 'Z : ' + acceleration.z );
                 document.getElementById('accelX').textContent = 'Acceleration X: ' + acceleration.x + '<br />';
 				document.getElementById('accelY').textContent = 'Acceleration Y: ' + acceleration.y + '<br />';
 				document.getElementById('accelZ').textContent = 'Acceleration Z: ' + acceleration.z + '<br />';
@@ -69,9 +70,9 @@
         </div>
 
         <div id="valAccel">
-            <p id="accelX">X :  </p>
-            <p id="accelY">Y :  </p>
-            <p id="accelZ">Z :  </p>
+            <p id="accelX">Acceleration X :  </p>
+            <p id="accelY">Acceleration Y :  </p>
+            <p id="accelZ">Acceleration Z :  </p>
         </div>
 
         <script type="text/javascript" src="cordova.js"></script>
