@@ -9,7 +9,6 @@ document.addEventListener("deviceready", onDeviceReady, false);
 //
 function onDeviceReady() {
     alert('deviceReady');
-	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
 }
 
 // ____________________ ACCELEROMETER _____________
@@ -60,7 +59,7 @@ function onSuccessGPS(position) {
     document.getElementById('longitude').textContent = 'Longitude : ' + position.coords.longitude ;
     document.getElementById('altitude').textContent = 'Altitude: ' + position.coords.altitude ;
 	
-	gotFileWriter(writer);
+	saveGeo();
 }
 
 // onError Callback receives a PositionError object
@@ -72,25 +71,58 @@ function onError(error) {
 
 
 // ______ FILE _________
-function gotFS(fileSystem) {
-	fileSystem.root.getFile("TestingLog.txt", {create: true, exclusive: false}, gotFileEntry, fail);
+var FILENAME = 'TestLog.txt';
+
+$ = function (id) {
+	return document.getElementById(id);
+};
+
+failCB = function (msg) {
+	return function () {
+		alert('[FAIL] ' + msg);
+	}
+};
+
+file = {writer: { available: false }, reader: { available: false }};
+
+
+document.addEventListener('deviceready', function () {
+	var fail = failCB('requestFileSystem');
+	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+}, false);
+
+function gotFS(fs) {
+	var fail = failCB('getFile');
+	fs.root.getFile(FILENAME, {create: true, exclusive: false}, gotFileEntry, fail);
 }
 
 function gotFileEntry(fileEntry) {
+	var fail = failCB('createWriter');
+	file.entry = fileEntry;
 	fileEntry.createWriter(gotFileWriter, fail);
 }
 
-function gotFileWriter(writer) {
-	writer.seek(writer.length);
-	writer.write(document.getElementById('latitude').textContent);
-	
-	writer.seek(writer.length);
-	writer.write(document.getElementById('longitude').textContent);
-	
-	writer.seek(writer.length);
-	writer.write(document.getElementById('altitude').textContent);
+function gotFileWriter(fileWriter) {
+	file.writer.available = true;
+	file.writer.object = fileWriter;
 }
 
-function fail(error) {
-	console.log(error.code);
+function saveGeo() {
+	var LogEntries = [];
+	LogEntries.push(
+		document.getElementById('latitude').textContent = 'Latitute : ' + position.coords.latitude + '\n'
+		document.getElementById('longitude').textContent = 'Longitude : ' + position.coords.longitude + '\n'
+		document.getElementById('altitude').textContent = 'Altitude: ' + position.coords.altitude + '\n');
+
+	if (file.writer.available) {
+		file.writer.available = false;
+		file.writer.object.onwriteend = function (evt) {
+			file.writer.available = true;
+			file.writer.object.seek(0);
+		}
+		file.writer.object.write(LogEntries.join("\n"));
+	}
+
+	return false;
 }
+
