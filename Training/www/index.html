@@ -18,7 +18,7 @@
             <button id="btn_getPosition" type="button" onclick="btn_getPosition()">
                 Get GPS position
             </button>
-            <button id="btn_getAccel" type="button" onclick="startWatch()">
+            <button id="btn_getAccel" type="button" onclick="getAcceleration()">
                 Get Accel
             </button>
         </div>
@@ -37,5 +37,13 @@
             <p id="altitude">Altitude :  </p>
         </div>
 
+        <nav class="footer">
+            <button id="btn_startWatch" type="button" onclick="startWatch()">
+                Start watching acceloremeter
+            </button>
+            <button id="btn_stopWatch" type="button" onclick="stopWatch()">
+                Stop watching
+            </button>
+        </nav>
     </body>
 </html>

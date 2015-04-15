@@ -10,7 +10,6 @@ document.addEventListener("deviceready", onDeviceReady, false);
 function onDeviceReady() {
     alert('deviceReady');
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
-    startWatch();
 }
 
 // ____________________ ACCELEROMETER _____________
@@ -31,7 +30,6 @@ function startWatch() {
 function stopWatch() {
     if (watchID) {
         navigator.accelerometer.clearWatch(watchID);
-        alert('stopping watch');
         watchID = null;
     }
 }
@@ -50,12 +48,12 @@ function onSuccessAccel(acceleration) {
 
 function btn_getPosition(){
     alert('getting position');
-    navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    navigator.geolocation.getCurrentPosition(onSuccessGPS, onError);
 }
 
 // onSuccess Geolocation
 //
-function onSuccess(position) {
+function onSuccessGPS(position) {
     alert('Lat ' + position.coords.latitude);
 
     document.getElementById('latitude').textContent = 'Latitute : ' + position.coords.latitude ;

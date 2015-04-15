@@ -44,3 +44,9 @@ h2{
 .values{
     margin-left: 50px;
 }
+
+.footer{
+    position: absolute;
+    bottom: 0;
+
+}
