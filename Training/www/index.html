@@ -22,6 +22,7 @@
             //
             function onDeviceReady() {
                 alert('deviceReady');
+				//navigator.accelerometer.getCurrentAcceleration(onSuccess, onError);
                 startWatch();
             }
 
@@ -47,11 +48,9 @@
             // onSuccess: Get a snapshot of the current acceleration
             //
             function onSuccess(acceleration) {
-                //var element = document.getElementById('accelerometer');
-                alert('Acceleration X: ' + acceleration.x         + '<br />' +
-                                    'Acceleration Y: ' + acceleration.y         + '<br />' +
-                                    'Acceleration Z: ' + acceleration.z         + '<br />' +
-                                    'Timestamp: '      + acceleration.timestamp + '<br />');
+                document.getElementById('accelX').textContent = 'Acceleration X: ' + acceleration.x + '<br />';
+				document.getElementById('accelY').textContent = 'Acceleration Y: ' + acceleration.y + '<br />';
+				document.getElementById('accelZ').textContent = 'Acceleration Z: ' + acceleration.z + '<br />';
             }
 
             // onError: Failed to get the acceleration
@@ -61,7 +60,7 @@
             }
         </script>
 
-        <h1>Acceloremeter and GPS tests</h1>
+        <h1>Accelerometer and GPS tests</h1>
 
         <div style="text-align:center">
             <button type="button">
@@ -69,7 +68,7 @@
             </button>
         </div>
 
-        <div class="valAccel">
+        <div id="valAccel">
             <p id="accelX">X :  </p>
             <p id="accelY">Y :  </p>
             <p id="accelZ">Z :  </p>
