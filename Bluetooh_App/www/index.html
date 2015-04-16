@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-
 <html>
-
     <head>
         <meta charset="utf-8" />
         <meta name="format-detection" content="telephone=no" />
@@ -41,7 +39,8 @@
 				function rowDevice(device) {
 					var currentNode = document.createElement('div');
 					currentNode.id = device.id;
-					currentNode.innerHTML = '<div id="'+device.name+'" onclick="bluetoothSerial.connect('+device.address+', onSuccess, onError);">'+device.name+'</div></br>';
+					//currentNode.innerHTML = '<button id="'+device.name+'" onclick="alert(\'click\');">'+device.name+" "+device.id+'</button></br>';
+					currentNode.innerHTML = '<button id="'+device.name+'" onclick="bluetoothSerial.connect('+device.id+', onSuccess, onError);">'+device.name+" "+device.id+" adr: "+device.address+'</button></br>';
 					document.getElementById("devices_list").appendChild(currentNode);
 				}
 				
