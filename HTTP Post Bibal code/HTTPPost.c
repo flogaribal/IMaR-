@@ -22,6 +22,7 @@ int main(int argc, char *argv[]) {
 		puts("Parameters: <apikey> <command>");
 		exit(0);
 	}
+	printf("0 : Initialized");
 
 
 	/* fill in the parameters */
@@ -29,28 +30,33 @@ int main(int argc, char *argv[]) {
 	printf("Request:\n%s\n", message);
 
 
+
 	/* Creating the socket */
 	sockfd = socket(AF_INET, SOCK_STREAM, 0);
 	if (sockfd < 0) {
 		error("ERROR opening socket");
 	}
+	printf("1 : Socket opened");
 
 	/* Trying to identify the IP adress */
 	server = gethostbyname(host);
 	if (server == NULL) {
 		error("ERROR, no such host");
 	}
+	printf("2 : IP address identified");
 
 	/* Filling the data structure to be sent */
 	memset(&serv_addr, 0, sizeof(serv_addr));
 	serv_addr.sin_family = AF_INET;
 	serv_addr.sin_port = htons(portno);
 	memcpy(&serv_addr.sin_addr.s_addr, server->h_addr, server->h_length);
+	printf("3 : Data structure ready");
 
 	/* connect the socket */
 	if (connect(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0){
 		error("ERROR connecting");
 	}
+	printf("4 : Socket connected");
 
 	/* send the request */
 	total = strlen(message);
@@ -65,6 +71,7 @@ int main(int argc, char *argv[]) {
 		}
 		sent += bytes;
 	} while (sent < total);
+	printf("5 : Request sent");
 
 	/* receive the response */
 	memset(response, 0, sizeof(response));
@@ -80,18 +87,22 @@ int main(int argc, char *argv[]) {
 		}
 		received += bytes;
 	} while (received < total);
+	
 
 	if (received == total) {
 		error("ERROR storing complete response from socket");
 	}
+	printf("6 : Answer received");
 
 	/* close the socket */
 	close(sockfd);
+	printf("7 : Socket closed");
 
 	/* process response */
 	printf("Response:\n%s\n", response);
 
 	return 0;
+	printf("8 : End of main()");
 }
 
 
