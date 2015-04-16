@@ -41,8 +41,12 @@
 				function rowDevice(device) {
 					var currentNode = document.createElement('div');
 					currentNode.id = device.id;
-					currentNode.innerHTML = '<div id="'+device.name+'" onclick="bluetoothSerial.connect('+device.address+', alert("Connecting to '+device.name+'"), alert("Impossible to connect to '+device.name+'"));">'+device.name+'</div></br>';
+					currentNode.innerHTML = '<div id="'+device.name+'" onclick="bluetoothSerial.connect('+device.address+', onSuccess, onError);">'+device.name+'</div></br>';
 					document.getElementById("devices_list").appendChild(currentNode);
+				}
+				
+				function onSuccess() {
+					alert("Connected !");
 				}
 
 
