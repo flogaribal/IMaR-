@@ -10,18 +10,20 @@ function onDeviceReady() {
 
 //_____BlueTooth_____
 function reshButt() {
-	bluetoothSerial.discoverUnpaired(tabDevices(devices), function(){onError()});
+	bluetoothSerial.discoverUnpaired(
+		function(devices) {
+			var currentNode;
+			devices.forEach(
+				function(device){
+					currentNode = document.createElement('div');
+					currentNode.id = device.id;
+					document.getElementById(device.id).innerHTML = '<div id="'+device.name+'" onclick="bluetoothSerial.connect('+device.address+', alert("Connecting to '+device.name+'"), alert("Impossible to connect to '+device.name+'"));">'+device.name+'</div></br>';
+					document.getElementById("devices_list").appendChild(currentNode);
+				}
+			);
+		}
+	);
 }
-
-function tabDevices(devices) {
-	devices.forEach(rowDevice(device));
-}
-
-function rowDevice(device) {
-	document.getElementById('devices_list').classList.add(device.id);
-	document.getElementById(device.id).innerHTML = '<span onclick="bluetoothSerial.connect('+device.address+', alert("Connecting to '+device.name+'"), alert("Impossible to connect to '+device.name+'"));">'+device.name+'</span></br>';
-}
-
 
 function onError() {
     alert('Error while looking for BlueTooth devices');
