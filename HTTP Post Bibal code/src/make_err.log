@@ -1,0 +1,46 @@
+In file included from trio.c:81:
+i:/MINGW/BIN/../lib/gcc-lib/mingw32/2.95.3-7/../../../../include/ctype.h:217: parse error before `unsigned'
+trio.c:205: parse error before `trio_int8_t'
+trio.c:205: warning: type defaults to `int' in declaration of `trio_int8_t'
+trio.c:205: warning: data definition has no type or storage class
+trio.c:206: parse error before `trio_int16_t'
+trio.c:206: warning: type defaults to `int' in declaration of `trio_int16_t'
+trio.c:206: warning: data definition has no type or storage class
+trio.c:207: parse error before `trio_int32_t'
+trio.c:207: warning: type defaults to `int' in declaration of `trio_int32_t'
+trio.c:207: warning: data definition has no type or storage class
+trio.c: In function `TrioPreprocess':
+trio.c:893: warning: unused variable `charlen'
+trio.c: In function `TrioOutStreamFileDescriptor':
+trio.c:2966: warning: implicit declaration of function `write'
+trio.c: In function `trio_printfv':
+trio.c:3095: warning: `dummy' might be used uninitialized in this function
+trio.c: In function `trio_fprintfv':
+trio.c:3138: warning: `dummy' might be used uninitialized in this function
+trio.c: In function `trio_dprintfv':
+trio.c:3180: warning: `dummy' might be used uninitialized in this function
+trio.c: In function `trio_sprintfv':
+trio.c:3229: warning: `dummy' might be used uninitialized in this function
+trio.c: In function `trio_snprintfv':
+trio.c:3288: warning: `dummy' might be used uninitialized in this function
+trio.c: In function `trio_printv_ref':
+trio.c:4086: warning: `dummy' might be used uninitialized in this function
+trio.c: In function `TrioReadNumber':
+trio.c:4494: `x' undeclared (first use in this function)
+trio.c:4494: (Each undeclared identifier is reported only once
+trio.c:4494: for each function it appears in.)
+trio.c: In function `TrioScan':
+trio.c:4989: warning: unused variable `cnt'
+trio.c: In function `TrioInStreamFileDescriptor':
+trio.c:5338: warning: implicit declaration of function `read'
+trio.c: In function `trio_scanfv':
+trio.c:5407: warning: `dummy' might be used uninitialized in this function
+trio.c: In function `trio_fscanfv':
+trio.c:5450: warning: `dummy' might be used uninitialized in this function
+trio.c: In function `trio_dscanfv':
+trio.c:5492: warning: `dummy' might be used uninitialized in this function
+trio.c: In function `trio_sscanfv':
+trio.c:5535: warning: `dummy' might be used uninitialized in this function
+make[2]: *** [trio.lo] Fout 1
+make[1]: *** [all-recursive] Fout 1
+make: *** [all-recursive-am] Fout 2
