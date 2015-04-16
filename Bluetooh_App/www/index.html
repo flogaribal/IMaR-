@@ -25,13 +25,18 @@
 
 				//_____BlueTooth_____
 				function reshButt() {
-					bluetoothSerial.discoverUnpaired(tabDevices(devices), onError);
 					alert('reshbutton');
+					bluetoothSerial.discoverUnpaired(function(devices) {
+							devices.forEach(
+									function(device) {
+										alert('device ' + device.id);
+										console.log(device.id);
+										rowDevice(device)
+									}
+							)
+					}, onError);
 				}
 
-				function tabDevices(devices) {
-					devices.forEach(rowDevice(device));
-				}
 
 				function rowDevice(device) {
 					document.getElementById('devices_list').classList.add(device.id);
