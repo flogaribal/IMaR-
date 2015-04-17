@@ -39,6 +39,10 @@ int main(void){
        just as well be a https:// URL if that is what should receive the
        data. */ 
     curl_easy_setopt(curl, CURLOPT_URL, "http://requestb.in/o3r7poo3");
+
+	//Enable curl response
+	curl_setopt(curl, CURLOPT_RETURNTRANSFER, true);
+
     /* Now specify the POST data */ 
     curl_easy_setopt(curl, CURLOPT_POSTFIELDS, "name=daniel&project=curl");
  
@@ -52,7 +56,8 @@ int main(void){
     curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
 
     /* Perform the request, res will get the return code */ 
-    res = curl_easy_perform(curl);
+    //res = curl_easy_perform(curl);
+	res = curl_exec(curl);
 
     /* Check for errors */ 
     if(res != CURLE_OK)
