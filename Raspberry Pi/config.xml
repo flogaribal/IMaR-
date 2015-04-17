@@ -1,0 +1,6 @@
+<config>
+	<device id="123456789" username="Toto" password="pwdtoto">
+	</device>
+	<device id="11111" username="vincent" password="bolosse">
+	</device>
+</config>

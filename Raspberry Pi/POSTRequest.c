@@ -1,72 +1,63 @@
-#include <stdio.h>
 #include <curl/curl.h>
+#include <curl/easy.h>
+#include <string.h>
 
-struct WriteThis {
-  const char *readptr;
-  long sizeleft;
-};
 
-static size_t read_callback(void *ptr, size_t size, size_t nmemb, void *userp) {
-  struct WriteThis *pooh = (struct WriteThis *)userp;
 
-  if(size*nmemb < 1)
-    return 0;
+/* function prototypes to define later */
+char *do_web_request(char *url,char* args);
+size_t static write_callback_func(void *buffer, size_t size,size_t nmemb,void *userp);
 
-  if(pooh->sizeleft) {
-    *(char *)ptr = pooh->readptr[0]; /* copy one single byte */
-    pooh->readptr++;                 /* advance pointer */
-    pooh->sizeleft--;                /* less data left */
-    return 1;                        /* we return 1 byte at a time! */
-  }
+/* the main function invoking */
+int main(){
+    char *url = "http://requestb.in/o3r7poo3";
+    char *content = NULL;
+    char *args = "name=zarioh&project=stage";
 
-  return 0;                          /* no more data left to deliver */
+    content = do_web_request(url,args);
+
+    printf("%s", content);
 }
- 
 
-int main(void){
-  CURL *curl;
-  CURLcode res;
-  struct WriteThis pooh;
+/* the function to return the content for a url */
+char *do_web_request(char *url, char* args){
+    /* keeps the handle to the curl object */
+    CURL *curl_handle = NULL;
+    /* to keep the response */
+    char *response = NULL;
 
- 
-  /* In windows, this will init the winsock stuff */ 
-  curl_global_init(CURL_GLOBAL_ALL);
- 
-  /* get a curl handle */ 
-  curl = curl_easy_init();
-  if(curl) {
+    /* initializing curl and setting the url */
+    curl_handle = curl_easy_init();
     /* First set the URL that is about to receive our POST. This URL can
        just as well be a https:// URL if that is what should receive the
        data. */ 
-    curl_easy_setopt(curl, CURLOPT_URL, "http://requestb.in/o3r7poo3");
-
-	//Enable curl response
-	curl_setopt(curl, CURLOPT_RETURNTRANSFER, true);
-
+    curl_easy_setopt(curl_handle, CURLOPT_URL, url);
     /* Now specify the POST data */ 
-    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, "name=daniel&project=curl");
- 
-     /* we want to use our own read function */
-    curl_easy_setopt(curl, CURLOPT_READFUNCTION, read_callback);
+    curl_easy_setopt(curl_handle, CURLOPT_POSTFIELDS, args);
 
-    /* pointer to pass to our read function */
-    curl_easy_setopt(curl, CURLOPT_READDATA, &pooh);
+    /* follow locations specified by the response header */
+    curl_easy_setopt(curl_handle, CURLOPT_FOLLOWLOCATION, 1);
 
-    /* get verbose debug output please */
-    curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
+    /* setting a callback function to return the data */
+    curl_easy_setopt(curl_handle, CURLOPT_WRITEFUNCTION, write_callback_func);
 
-    /* Perform the request, res will get the return code */ 
-    //res = curl_easy_perform(curl);
-	res = curl_exec(curl);
+    /* passing the pointer to the response as the callback parameter */
+    curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, &response);
 
-    /* Check for errors */ 
-    if(res != CURLE_OK)
-      fprintf(stderr, "curl_easy_perform() failed: %s\n",
-              curl_easy_strerror(res));
- 
-    /* always cleanup */ 
-    curl_easy_cleanup(curl);
-  }
-  curl_global_cleanup();
-  return 0;
+    /* perform the request */
+    curl_easy_perform(curl_handle);
+
+    /* cleaning all curl stuff */
+    curl_easy_cleanup(curl_handle);
+
+    return response;
+}
+
+/* the function to invoke as the data recieved */
+size_t static write_callback_func(void *buffer,size_t size,size_t nmemb,void *userp){
+    char **response_ptr =  (char**)userp;
+
+    /* assuming the response is a string */
+    *response_ptr = strndup(buffer, (size_t)(size *nmemb));
+
 }
