@@ -2,7 +2,7 @@
 #include <curl/easy.h>
 #include <string.h>
 
-
+#include "POSTRequest.h"
 
 /* function prototypes to define later */
 char *do_web_request(char *url,char* args);

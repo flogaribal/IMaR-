@@ -1,5 +1,7 @@
 #define CONFIG_FILE_PATH "config.xml"
 
+#include "XMLReader.h"
+
 /**
 ** Function use to read config from the config file (config.xml)
 **/
@@ -18,7 +20,7 @@ Device getConfig(){
 	return device;
 }
 
-/*
+
 int main(){
 
 	Device device = getConfig();
@@ -46,4 +48,4 @@ int main(){
 		printf("pwd NNNNOK\n");
 	}
 }
-*/
+
