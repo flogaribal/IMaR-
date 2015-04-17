@@ -3,9 +3,9 @@
 
 
 typedef  struct Devices {
-	const char* id;
-	const char* user_name;
-	const char* password;
+	char* id;
+	char* user_name;
+	char* password;
 }Device ;
 
 Device getConfig(){
@@ -13,21 +13,16 @@ Device getConfig(){
 	Device device;
 
 	currDevice = ezxml_child(f1, "device");
-	const char* deviceId = ezxml_attr(currDevice, "id");
-	//strcpy(device.id, deviceId);
-	printf("tmp_id: %s",device.id);
-    device.user_name = ezxml_attr(currDevice, "username");
-    device.password = ezxml_attr(currDevice, "password");
 
+	device.id = strdup(ezxml_attr(currDevice, "id"));
+    device.user_name = strdup(ezxml_attr(currDevice, "username"));
+    device.password = strdup(ezxml_attr(currDevice, "password"));
 
 	ezxml_free(f1); 
 
 	return device;
 }
 
-char *getUserName(){
-
-}
 
 int main(){
 
@@ -37,8 +32,8 @@ int main(){
 	const char *password = device.password;
 
 
-	printf("id : %s", device.id);
-/*	if(strcmp(deviceId,"123456789")==0){
+//	printf("id : %s", device.id);
+	if(strcmp(deviceId,"123456789")==0){
 		printf("device id OK\n");
 	}else{
 		printf("device id NNNNOK\n");
@@ -55,5 +50,4 @@ int main(){
 	}else{
 		printf("pwd NNNNOK\n");
 	}
-	*/
 }
