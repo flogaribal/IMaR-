@@ -8,7 +8,7 @@
 char *do_web_request(char *url,char* args);
 size_t static write_callback_func(void *buffer, size_t size,size_t nmemb,void *userp);
 
-/* the main function invoking */
+/* the main function invoking 
 int main(){
     char *url = "http://requestb.in/o3r7poo3";
     char *content = NULL;
@@ -18,6 +18,7 @@ int main(){
 
     printf("%s", content);
 }
+*/
 
 /* the function to return the content for a url */
 char *do_web_request(char *url, char* args){

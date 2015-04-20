@@ -20,7 +20,7 @@ Device getConfig(){
 	return device;
 }
 
-
+/*
 int main(){
 
 	Device device = getConfig();
@@ -48,4 +48,4 @@ int main(){
 		printf("pwd NNNNOK\n");
 	}
 }
-
+*/
