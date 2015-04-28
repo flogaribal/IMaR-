@@ -8,7 +8,7 @@
 /* function prototypes to define later */
 size_t static write_callback_func(void *buffer, size_t size,size_t nmemb,void *userp);
 
-/* the main function for testing* 
+/* the main function for testing*
 int main(){
     char *url = "http://requestb.in/1dsmegi1";
     char *content = NULL;

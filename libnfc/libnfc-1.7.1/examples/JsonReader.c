@@ -9,17 +9,24 @@
 **/
 Device getConfig(){
 
+	// init a device
 	Device device;
+	
+	// init three json_object
   	json_object *root, *username, *password;
 
 	#ifdef DEBUG
 	  	MC_SET_DEBUG(1);
 	#endif
 
+	// parse the file and get the root node
     root = json_object_from_file(CONFIG_FILE_PATH);  
+	// get the username field
 	username = json_object_object_get(root,"username");
+	// get the password field
  	password = json_object_object_get(root,"password");
 
+	// fill in the device fields
 	device.username = strdup(json_object_get_string(username));
 	device.password = strdup(json_object_get_string(password));
 
@@ -30,18 +37,26 @@ Device getConfig(){
 ** Function use to read response from the server
 **/
 ServerResponse getResponse(){
+	// init a ServerResponse
 	ServerResponse serverResponse ; 
 
+	// init four json_object
   	json_object *root, *msg, *error, *status;
 
 	#ifdef DEBUG
 	  	MC_SET_DEBUG(1);
 	#endif
-    root = json_object_from_file(SERVER_RESPONSE_FILE_PATH);  
+
+	// parse the file and get the root node
+    root = json_object_from_file(SERVER_RESPONSE_FILE_PATH);
+	// get the msg field  
 	msg = json_object_object_get(root,"msg");
+	// get the error field
  	error = json_object_object_get(root,"error");
+	// get the status field
 	status = json_object_object_get(root,"status");
 
+	// fill in the serverResponse fields
 	serverResponse.msg = strdup(json_object_get_string(msg));
 	serverResponse.error = strdup(json_object_get_string(error));
 	serverResponse.status = strdup(json_object_get_string(status));

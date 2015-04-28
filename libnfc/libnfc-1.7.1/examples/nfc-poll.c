@@ -55,8 +55,11 @@
 #include <nfc/nfc.h>
 #include <nfc/nfc-types.h>
 
+// IMPORT WITH RELATIVE PATH NECESSARY 
 #include "../utils/nfc-utils.h"
+// USE TO READ FROM JSON FILES
 #include "JsonReader.h"
+// USE TO SEND POST REAUEST TO A SPECIFIC SERVER
 #include "POSTRequest.h"
 
 #define API_URL "http://hr-clocker.azurewebsites.net/api/checkin"
@@ -67,6 +70,7 @@ static nfc_device *pnd = NULL;
 static nfc_context *context;
 
 
+// In case of bad usage 
 static void print_usage(const char *progname){
   printf("usage: %s [-v]\n", progname);
   printf("  -v\t verbose display\n");
@@ -77,13 +81,12 @@ static void print_usage(const char *progname){
 int main(int argc, const char *argv[]){
 
 
-	//get the config of the NFC card reader
+	//get the config of the NFC card reader by reading fronm "config.json"
 	Device device = getConfig();
-
+	
+	// get the username and password read from the json file
 	char *user_name = device.username;
 	char *password = device.password;
-	//char *user_name = "reader1";
-	//char *password = "toor";
 
 	// Create string which follows the pattern "user:password"
 	char *username_pwd = malloc((strlen(user_name)+strlen(password)+2)*sizeof(char));
@@ -96,8 +99,9 @@ int main(int argc, const char *argv[]){
 
   	// Display libnfc version
  	const char *acLibnfcVersion = nfc_version();
-
   	printf("%s uses libnfc %s\n", argv[0], acLibnfcVersion);
+
+	// if bad usage
   	if (argc != 1) {
 		if ((argc == 2) && (0 == strcmp("-v", argv[1]))) {
 	  	verbose = true;
@@ -107,8 +111,13 @@ int main(int argc, const char *argv[]){
 		}
   	}
 
+	// Number of polling
   	const int uiPollNr = 5000000;
+
+	// Period of polling
   	const uint8_t uiPeriod = 2;
+
+	// Number of modulation
   	const nfc_modulation nmModulations[5] = {
     	{ .nmt = NMT_ISO14443A, .nbr = NBR_106 },
     	{ .nmt = NMT_ISO14443B, .nbr = NBR_106 },
@@ -116,9 +125,12 @@ int main(int argc, const char *argv[]){
     	{ .nmt = NMT_FELICA, .nbr = NBR_424 },
     	{ .nmt = NMT_JEWEL, .nbr = NBR_106 },
  	};
+	// Size of modulations
   	const size_t szModulations = 5;
 
+	// NFC devices
   	nfc_target nt;
+
   	int res = 0;
 
 	// init context
@@ -128,6 +140,7 @@ int main(int argc, const char *argv[]){
     	exit(EXIT_FAILURE);
   	}
 
+	// open NFC device
   	pnd = nfc_open(context, NULL);
   	if (pnd == NULL) {
     	ERR("%s", "Unable to open NFC device.");
@@ -135,6 +148,7 @@ int main(int argc, const char *argv[]){
     	exit(EXIT_FAILURE);
   	}
 
+	// init the device
   	if (nfc_initiator_init(pnd) < 0) {
     	nfc_perror(pnd, "nfc_initiator_init");
     	nfc_close(pnd);
@@ -145,9 +159,12 @@ int main(int argc, const char *argv[]){
 	  	printf("NFC reader: %s opened\n", nfc_device_get_name(pnd));
 	  	printf("NFC device will poll during %ld s (%u pollings of %lu ms for %" PRIdPTR " modulations)\n", (unsigned long) (uiPollNr * 	szModulations * uiPeriod * 150)/1000, uiPollNr, (unsigned long) uiPeriod * 150, szModulations);
 	#endif
-
+	
+	// loop which permit to scan an infinite number of cards
 	while(true){
+		// check if a card is near the sensor
 		res = nfc_initiator_poll_target(pnd, nmModulations, szModulations, uiPollNr, uiPeriod, &nt);
+		
 	  	if (res  < 0) {
 			nfc_perror(pnd, "nfc_initiator_poll_target");
 			nfc_close(pnd);
@@ -155,75 +172,94 @@ int main(int argc, const char *argv[]){
 			exit(EXIT_FAILURE);
 	  	}
 
+		// if a card is scanned
 	  	if (res > 0) {
-			printf("Card read");
+			
+			int i=0;
+			
+			// the char which will contain the ID of the current card scanned
+			char cardId[10] = "";
+
+			// the char which will contain the response from the server
+			char *response ;
+
+			printf("\n\nCard read\n");
+	
+			// init both LED
 			system("gpio -g mode 23 out");
 			system("gpio -g mode 18 out");
+
+			// Turn on the red LED
 			system("gpio -g write 23 1");			
 			 
-			int i=0;
+			#ifdef DEBUG
+				printf("\n\n");
+				printf("NAI abtUID : ");
+			#endif
 
 			// Put the card Id into a variable as a string
-
-				#ifdef DEBUG
-					printf("\n\n");
-					printf("NAI abtUID : ");
+			for(i=0;i<10;i++){
+				#ifdef DEBUG	
+					printf("%X  ",nt.nti.nai.abtUid[i]);
 				#endif
-				char cardId[10] = "";
-				for(i=0;i<10;i++){
-					#ifdef DEBUG	
-						printf("%X  ",nt.nti.nai.abtUid[i]);
-					#endif
-					sprintf(cardId,"%s%X",cardId,nt.nti.nai.abtUid[i]);	 
-				
-				}
-				printf("\n\n");
-			
+				sprintf(cardId,"%s%X",cardId,nt.nti.nai.abtUid[i]);	 
+			}
 
-				// standart output of nfc-poll
-				//print_nfc_target(&nt, verbose);
+			// standart output of nfc-poll
+			//print_nfc_target(&nt, verbose);
 			
-
 			// Building string which contains POST Request args
 			char *args = malloc((strlen("payload={\"cardID\" => \"")+strlen(cardId)+strlen("\"}")+strlen("&type=1")+1)*sizeof(char));
-	
-
 			strcpy(args,"payload={\"cardID\" => \"");
 			strcat(args,cardId); 
 			strcat(args,"\"}");
 			strcat(args,"&type=1");
 
-			char *response ;
 			#ifdef DEBUG
 				printf("URL : %s\n", API_URL);
 				printf("ARGUMENTS T : %s\n\n", args);
-			#endif
-		 
-			// Do the web reauest and get/display the response
+			#endif 
+
+			// Do the web request and get/display the response
 			response = do_web_request(API_URL,args,username_pwd);
+
+			// make available the space from args variable
 			free(args);
 
+			// open the file for the server response
 			FILE *fileResponse = fopen("./server.json","w");
+
+			// write  into the file the server response
 			fprintf(fileResponse,"%s",response);
+
+			// close the file
 			fclose(fileResponse);
 
 			#ifdef DEBUG		
 				printf("response : \n%s\n", response);
 			#endif 
 
+			// get the response of the server as a struct
 			ServerResponse server = getResponse();
 
+			// if the response mentionned some errors
 			if(strcmp(server.msg,"Success") != 0 || strcmp(server.error,"false") != 0 || strcmp(server.status,"200") != 0){
+				// turn OFF the red LED then ON then OFF
 				system("gpio -g write 23 0");
+				// wait 1 second
 				sleep(1);
 				system("gpio -g write 23 1");
 				sleep(1);
 				system("gpio -g write 23 0");
 
 			}else{
+				// turn on the green LED
 				system("gpio -g write 18 1");
+				// turn off the red LED				
 				system("gpio -g write 23 0");
+				// wait 2 seconds
 				sleep(2);
+				// turn off the green LED					
 				system("gpio -g write 18 0");
 			}			
 	  	} else {
