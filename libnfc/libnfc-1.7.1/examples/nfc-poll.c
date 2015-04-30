@@ -114,8 +114,8 @@ int main(int argc, const char *argv[]){
 		}
   	}
 
-	// Number of polling
-  	const int uiPollNr = 5000000;
+	// Number of polling, it's a big number in order to increase the scanning time
+  	const int uiPollNr = 50000;
 
 	// Period of polling
   	const uint8_t uiPeriod = 2;
