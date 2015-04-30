@@ -93,6 +93,7 @@ int main(int argc, const char *argv[]){
     strcpy(username_pwd,user_name);
 	strcat(username_pwd,":");
 	strcat(username_pwd,password);
+	printf("\nusn:pwd : %s\n",username_pwd);
   	bool verbose = false;
 
   	
@@ -181,17 +182,17 @@ int main(int argc, const char *argv[]){
 			char cardId[10] = "";
 
 			// the char which will contain the response from the server
-			char *response ;
+			char *response = "" ;
 
 			printf("\n\nCard read\n");
-	
+
 			// init both LED
-			system("gpio -g mode 23 out");
-			system("gpio -g mode 18 out");
+			system("/usr/local/bin/gpio -g mode 18 out");
+			system("/usr/local/bin/gpio -g mode 23 out");
 
 			// Turn on the red LED
-			system("gpio -g write 23 1");			
-			 
+			system("/usr/local/bin/gpio -g write 18 1");
+
 			#ifdef DEBUG
 				printf("\n\n");
 				printf("NAI abtUID : ");
@@ -226,42 +227,52 @@ int main(int argc, const char *argv[]){
 			// make available the space from args variable
 			free(args);
 
-			// open the file for the server response
-			FILE *fileResponse = fopen("./server.json","w");
-
-			// write  into the file the server response
-			fprintf(fileResponse,"%s",response);
-
-			// close the file
-			fclose(fileResponse);
-
-			#ifdef DEBUG		
+			#ifdef DEBUG
 				printf("response : \n%s\n", response);
-			#endif 
+			#endif
+			
+			if(strlen(response) != 0){
+				// parse the response of the server and get a struct
+				ServerResponse server = getResponse(response);
 
-			// get the response of the server as a struct
-			ServerResponse server = getResponse();
+				// if the response mentionned some errors
+				if(strcmp(server.msg,"Success") != 0 || strcmp(server.error,"false") != 0 || strcmp(server.status,"200") != 0){
 
-			// if the response mentionned some errors
-			if(strcmp(server.msg,"Success") != 0 || strcmp(server.error,"false") != 0 || strcmp(server.status,"200") != 0){
-				// turn OFF the red LED then ON then OFF
-				system("gpio -g write 23 0");
-				// wait 1 second
-				sleep(1);
-				system("gpio -g write 23 1");
-				sleep(1);
-				system("gpio -g write 23 0");
+					// turn OFF the red LED then ON then OFF
+					system("/usr/local/bin/gpio -g write 18 0");
+					// wait 1 second
+					sleep(1);
+					system("/usr/local/bin/gpio -g write 18 1");
+					sleep(1);
+					system("/usr/local/bin/gpio -g write 18 0");
 
-			}else{
-				// turn on the green LED
-				system("gpio -g write 18 1");
-				// turn off the red LED				
-				system("gpio -g write 23 0");
-				// wait 2 seconds
-				sleep(2);
-				// turn off the green LED					
-				system("gpio -g write 18 0");
-			}			
+				}else{ // if everything is all right
+					// turn on the green LED
+					system("/usr/local/bin/gpio -g write 23 1");
+					// turn off the red LED
+					system("/usr/local/bin/gpio -g write 18 0");
+					// wait 2 seconds
+					sleep(2);
+					// turn off the green LED					
+					system("/usr/local/bin/gpio -g write 23 0");
+				}	
+			}else{// in case of bad authentication
+				#ifdef DEBUG			
+					printf("Null response from the server\n");
+				#endif
+				for(i=0;i<15;i++){
+					if(i%2 == 0){
+						system("/usr/local/bin/gpio -g write 18 0");
+						system("/usr/local/bin/gpio -g write 23 1");
+					}else{
+						system("/usr/local/bin/gpio -g write 18 1");
+						system("/usr/local/bin/gpio -g write 23 0");
+					}
+					usleep(500);
+				}
+				system("/usr/local/bin/gpio -g write 23 0");	
+
+			}		
 	  	} else {
 			printf("No target found.\n");
 	  	}

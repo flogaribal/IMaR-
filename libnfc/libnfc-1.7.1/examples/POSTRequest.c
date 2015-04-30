@@ -26,7 +26,7 @@ char *do_web_request(char *url, char* args, char* username_pwd){
     /* keeps the handle to the curl object */
     CURL *curl_handle = NULL;
     /* to keep the response */
-    char *response = NULL;
+    char *response = "";
 
     /* initializing curl and setting the url */
     curl_handle = curl_easy_init();

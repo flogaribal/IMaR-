@@ -1,0 +1,32 @@
+#! /bin/sh
+# /etc/init.d/boot_nfc
+
+### BEGIN INIT INFO
+# Provides: boot_nfc
+# Required-Start: $local_fs $all
+# Required-Stop: $local_fs
+# Default-Start:
+# Default-Stop:
+# Short-Description : boot_nfc
+# Description: boot nfc
+### END INIT INFO
+
+
+case "$1" in
+   start)
+
+     echo "\n________________STARTING NFC READER_________________\n"
+     chmod +x /home/pi/libnfc/libnfc-1.7.1/examples/nfc_reader
+     echo "\n _____________test d'exec____________\n"
+     /home/pi/libnfc/libnfc-1.7.1/examples/nfc_reader &
+     ;;
+  stop)
+    echo "\n________________STOPPING NFC READER_________________\n"
+    echo "\ntoto\n"
+    ;;
+  *)
+    echo "USAGE"
+    exit 1
+    ;;
+esac
+exit 0 

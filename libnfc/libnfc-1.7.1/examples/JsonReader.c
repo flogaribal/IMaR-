@@ -1,5 +1,5 @@
-#define CONFIG_FILE_PATH "config.json"
-#define SERVER_RESPONSE_FILE_PATH "server.json"
+#define CONFIG_FILE_PATH "/home/pi/libnfc/libnfc-1.7.1/examples/config.json"
+
 
 #include "JsonReader.h"
 //#define DEBUG
@@ -26,6 +26,7 @@ Device getConfig(){
 	// get the password field
  	password = json_object_object_get(root,"password");
 
+
 	// fill in the device fields
 	device.username = strdup(json_object_get_string(username));
 	device.password = strdup(json_object_get_string(password));
@@ -36,7 +37,7 @@ Device getConfig(){
 /**
 ** Function use to read response from the server
 **/
-ServerResponse getResponse(){
+ServerResponse getResponse(char* resp){
 	// init a ServerResponse
 	ServerResponse serverResponse ; 
 
@@ -48,7 +49,7 @@ ServerResponse getResponse(){
 	#endif
 
 	// parse the file and get the root node
-    root = json_object_from_file(SERVER_RESPONSE_FILE_PATH);
+	root = json_tokener_parse(resp);
 	// get the msg field  
 	msg = json_object_object_get(root,"msg");
 	// get the error field
@@ -66,16 +67,16 @@ ServerResponse getResponse(){
 
 
 
-/*
+/**
 
 int main(){
 	Device d = getConfig();
 	printf("usn : %s\n",d.username);
 	printf("pwd : %s\n",d.password);
 	
-	ServerResponse s = getResponse();
+	ServerResponse s = getResponse("{\"msg\":\"Success\",\"error\":false,\"status\":200}");
 	printf("msg : %s\n",s.msg);
 	printf("error : %s\n",s.error);
 	printf("status : %s\n",s.status);
-}*/
+}/**/
 
