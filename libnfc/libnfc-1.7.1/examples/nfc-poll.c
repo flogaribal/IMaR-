@@ -93,7 +93,9 @@ int main(int argc, const char *argv[]){
     strcpy(username_pwd,user_name);
 	strcat(username_pwd,":");
 	strcat(username_pwd,password);
-	printf("\nusn:pwd : %s\n",username_pwd);
+	#ifdef DEBUG
+		printf("\nusn:pwd : %s\n",username_pwd);
+	#endif
   	bool verbose = false;
 
   	
