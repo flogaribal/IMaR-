@@ -9,6 +9,7 @@ case "$1" in
      /etc/init.d/boot_nfc &
      ;;
   stop)
+     echo "\n -----------------------------------STOOOOOOOOOOOOOOOOOOOP---------------------------\n"
     ;;
   *)
     echo "USAGE"

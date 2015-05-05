@@ -64,7 +64,7 @@
 
 #define API_URL "http://hr-clocker.azurewebsites.net/api/checkin"
 #define MAX_DEVICE_COUNT 16
-//#define DEBUG
+#define DEBUG
 
 static nfc_device *pnd = NULL;
 static nfc_context *context;
@@ -94,11 +94,11 @@ int main(int argc, const char *argv[]){
 	strcat(username_pwd,":");
 	strcat(username_pwd,password);
 	#ifdef DEBUG
-		printf("\nusn:pwd : %s\n",username_pwd);
+		printf("\nusn:pwd : %s\n\n",username_pwd);
 	#endif
   	bool verbose = false;
 
-  	
+	int i=0;  	
 
   	// Display libnfc version
  	const char *acLibnfcVersion = nfc_version();
@@ -114,7 +114,7 @@ int main(int argc, const char *argv[]){
 		}
   	}
 
-	// Number of polling, it's a big number in order to increase the scanning time
+	// Number of polling, it's a big number in order to increase the scanning time approx 2min 
   	const int uiPollNr = 50000;
 
 	// Period of polling
@@ -146,18 +146,29 @@ int main(int argc, const char *argv[]){
 	// open NFC device
   	pnd = nfc_open(context, NULL);
   	if (pnd == NULL) {
-    	ERR("%s", "Unable to open NFC device.");
-    	nfc_exit(context);
-    	exit(EXIT_FAILURE);
+    		ERR("%s", "Unable to open NFC device.");
+
+		for(i=0;i<15;i++){
+			if(i%2 == 0){
+				system("/usr/local/bin/gpio -g write 18 1");
+			}else{
+				system("/usr/local/bin/gpio -g write 18 0");
+			}
+			usleep(500);
+		}
+		system("/usr/local/bin/gpio -g write 18 0");			
+	    	nfc_exit(context);
+    		exit(EXIT_FAILURE);
   	}
 
 	// init the device
   	if (nfc_initiator_init(pnd) < 0) {
-    	nfc_perror(pnd, "nfc_initiator_init");
-    	nfc_close(pnd);
-    	nfc_exit(context);
-    	exit(EXIT_FAILURE);
-  	}
+		nfc_perror(pnd, "nfc_initiator_init");
+		nfc_close(pnd);
+		nfc_exit(context);
+		exit(EXIT_FAILURE);
+  	}		
+
 	#ifdef DEBUG
 	  	printf("NFC reader: %s opened\n", nfc_device_get_name(pnd));
 	  	printf("NFC device will poll during %ld s (%u pollings of %lu ms for %" PRIdPTR " modulations)\n", (unsigned long) (uiPollNr * 	szModulations * uiPeriod * 150)/1000, uiPollNr, (unsigned long) uiPeriod * 150, szModulations);
@@ -165,6 +176,7 @@ int main(int argc, const char *argv[]){
 	
 	// loop which permit to scan an infinite number of cards
 	while(true){
+		
 		// check if a card is near the sensor
 		res = nfc_initiator_poll_target(pnd, nmModulations, szModulations, uiPollNr, uiPeriod, &nt);
 		
@@ -177,8 +189,6 @@ int main(int argc, const char *argv[]){
 
 		// if a card is scanned
 	  	if (res > 0) {
-			
-			int i=0;
 			
 			// the char which will contain the ID of the current card scanned
 			char cardId[10] = "";

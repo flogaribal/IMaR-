@@ -6,7 +6,6 @@
 
 #include "./json/json.h"
 
-#define CONFIG_FILE_PATH "config.json"
 
 /**
 ** Struct to store information about devices
