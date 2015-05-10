@@ -23,6 +23,12 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
+  .state('login', {
+    url: "/login",
+    templateUrl: "templates/login.html",
+    //controller : "loginCtrl"
+  })
+
   .state('app', {
     url: "/app",
     abstract: true,
@@ -30,42 +36,110 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     controller: 'AppCtrl'
   })
 
-  .state('app.search', {
-    url: "/search",
+
+  .state('signUp', {
+    url: "/signUp",
+    templateUrl: "templates/signUp.html",
+    controller: 'NewRequestCtrl'
+  })
+
+
+  .state('app.newRequest', {
+    url: "/newRequest",
     views: {
       'menuContent': {
-        templateUrl: "templates/search.html"
+        templateUrl: "templates/newRequest.html",
+        controller: 'NewRequestCtrl'
       }
     }
   })
 
-  .state('app.browse', {
-    url: "/browse",
+  .state('app.pendingRequests', {
+    url: "/pendingRequests",
     views: {
       'menuContent': {
-        templateUrl: "templates/browse.html"
+        templateUrl: "templates/pendingRequests.html",
+        controller: 'PendingRequestCtrl'
       }
     }
   })
-    .state('app.playlists', {
-      url: "/playlists",
-      views: {
-        'menuContent': {
-          templateUrl: "templates/playlists.html",
-          controller: 'PlaylistsCtrl'
-        }
-      }
-    })
 
-  .state('app.single', {
-    url: "/playlists/:playlistId",
+  .state('app.previousCollections', {
+    url: "/previousCollections",
     views: {
       'menuContent': {
-        templateUrl: "templates/playlist.html",
-        controller: 'PlaylistCtrl'
+        templateUrl: "templates/previousCollections.html",
+        controller: 'PreviousCollectionsCtrl'
+      }
+    }
+  })
+
+  .state('app.settings', {
+    url: "/settings",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/settings.html"
+      }
+    }
+  })
+    
+  .state('app.about', {
+    url: "/about",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/about.html"
+      }
+    }
+  })
+
+  .state('app.conditions', {
+    url: "/conditions",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/conditions.html"
+      }
+    }
+  })
+
+  .state('app.contact', {
+    url: "/contact",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/contact.html"
+      }
+    }
+  })
+
+  .state('app.paymentMethods', {
+    url: "/paymentMethods",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/paymentMethods.html"
+      }
+    }
+  })
+
+  .state('app.map', {
+    url: "/map",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/map.html",
+        controller: "MapCtrl"
+      }
+    }
+  })
+
+
+  .state('app.collections', {
+    url: "/collections/:collectionsId",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/pendingRequests.html"
       }
     }
   });
+
+
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/playlists');
+  $urlRouterProvider.otherwise('/login'); 
 });

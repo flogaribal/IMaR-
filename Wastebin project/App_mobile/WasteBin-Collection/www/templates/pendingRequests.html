@@ -1,0 +1,9 @@
+<ion-view view-title="Pending Requests">
+  <ion-content>
+    <ion-list>
+      <ion-item ng-repeat="request in PendingRequests" href="#/app/playlists/{{playlist.id}}">
+        {{ request.text }} .............. {{ request.id }}
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,9 @@
+<ion-view view-title="Previous Collections">
+  <ion-content>
+    <ion-list>
+      <ion-item ng-repeat="prevCollect in PreviousCollections" href="#/app/playlists/{{playlist.id}}">
+        {{ prevCollect.text }} .............. {{ prevCollect.id }}
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

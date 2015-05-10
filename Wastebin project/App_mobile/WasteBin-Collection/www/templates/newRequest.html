@@ -1,0 +1,88 @@
+<ion-view view-title="New Request">
+  <ion-content>
+  	<form ng-submit="ADD_REQUEST">
+      <div class="list">
+
+      	<div class="item item-divider">
+		   Wastebin information :
+		</div>
+
+     <div class="row">
+        <div class="col col-50">
+          <label class="item item-input">
+            <span class="input-label">Weight</span>
+            <input type="text" >
+          </label>
+        </div>
+
+        <div class="col">
+          <div class="button-bar" >
+          
+              <ion-radio ng-repeat="item in unitList" ng-value="item.text" class="button button-positive button-outline kgPound " name="radio1">
+                {{ item.value }}
+              </ion-radio>
+      
+          </div>
+        </div>
+      </div>     
+
+        <label class="item item-input">
+          <span class="input-label">Type</span>
+          <input type="text">
+        </label>
+
+        <h5 style="text-align: center;">The price will be ... €</h5>
+
+		<div class="item item-divider">
+		   Pickup address and time : 
+		</div>
+        <label class="item item-input">
+          <span class="input-label">Hour </span>
+          <input type="text" >
+        </label>    
+
+        <ion-toggle ng-checked="mine.checked" ng-model="mine.checked" ng-change="showForm()">
+         	Use my address
+        </ion-toggle>
+
+        <a ui-sref="app.map">TEST</a>
+        <div id="form" style="display: none;">
+          <div class="row">
+              <div class="col col-25">
+                <label class="item item-input">
+                    <input type="tel" placeholder="Num" >
+                  </label> 
+              </div>
+              <div class="col col-66 ">
+                  <label class="item item-input">
+                    <input type="text" placeholder="Street name" >
+                  </label> 
+              </div>
+
+            <div class="col col-10 ">
+<!--                 <label class="item item-input">
+                </label> -->
+                  <i class="icon ion-location"></i>
+              </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label class="item item-input">
+                  <input type="text" placeholder="City" >
+              </label>  
+            </div>
+            <div class="col">
+              <label class="item item-input">
+                  <input type="text" placeholder="County" >
+                </label>
+            </div>
+          </div>
+	      </div>
+        <label class="item">
+          <button class="button button-block button-positive" type="submit">OK</button>
+        </label>
+      </div>
+    </form>
+  </ion-content>
+</ion-view>

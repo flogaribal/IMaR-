@@ -1,0 +1,72 @@
+
+<div class="bar bar-header bar-calm">
+  <h1 class="title">Sign up !</h1>
+</div>
+
+
+<form ng-submit="ADD_REQUEST">
+  <div class="list">
+
+  	<div class="item item-divider">
+   Personnal information :
+</div>
+
+    <label class="item item-input">
+      <span class="input-label">First name</span>
+      <input type="text">
+    </label>            
+
+    <label class="item item-input">
+      <span class="input-label">Last name</span>
+      <input type="text" >
+    </label>
+
+    <label class="item item-input">
+      <span class="input-label">Date of birth</span>
+      <input type="date" >
+    </label>
+
+    <label class="item item-input">
+      <span class="input-label">Mail</span>
+      <input type="email" >
+    </label>
+
+    <label class="item item-input">
+      <span class="input-label">Phone number</span>
+      <input type="tel" >
+    </label>
+
+<div class="item item-divider">
+   Personnal Address :
+</div>
+
+<div class="row">
+  <div class="col col-33">
+  	<label class="item item-input">
+        <input type="tel" placeholder="Num" >
+      </label> 
+  </div>
+  <div class="col ">
+	    <label class="item item-input">
+        <input type="text" placeholder="Street name" >
+      </label> 
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+  	<label class="item item-input">
+        <input type="text" placeholder="City" >
+      </label>  
+  </div>
+  <div class="col">
+  	<label class="item item-input">
+        <input type="text" placeholder="County" >
+      </label>
+  </div>
+</div>
+    <label class="item">
+    <!-- TODOOOOOOOOO -->
+      <button class="button button-block button-positive" type="submit" ui-sref="app.pendingRequests">OK</button>
+    </label>
+  </div>
+</form>
