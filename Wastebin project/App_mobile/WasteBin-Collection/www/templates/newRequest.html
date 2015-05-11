@@ -1,52 +1,81 @@
 <ion-view view-title="New Request">
   <ion-content>
-  	<form ng-submit="ADD_REQUEST">
+  	<form ng-submit="addRequest()">
       <div class="list">
 
       	<div class="item item-divider">
 		   Wastebin information :
-		</div>
+		  </div>
 
      <div class="row">
-        <div class="col col-50">
+        <div class="col col-66">
           <label class="item item-input">
             <span class="input-label">Weight</span>
-            <input type="text" >
+            <input type="number" ng-model="requestInfo.weight">
           </label>
         </div>
 
         <div class="col">
-          <div class="button-bar" >
-          
-              <ion-radio ng-repeat="item in unitList" ng-value="item.text" class="button button-positive button-outline kgPound " name="radio1">
-                {{ item.value }}
-              </ion-radio>
-      
+          <div class="button-bar" style="height: 47px;">
+            <label class="item item-radio">
+              <input type="radio" name="group" ng-model="requestInfo.kg">
+                <div class="item-content" >kg</div>
+              <i class="radio-icon ion-checkmark"></i>
+            </label>    
+            <label class="item item-radio">
+              <input type="radio" name="group" ng-model="requestInfo.pounds">
+                <div class="item-content">£</div>
+              <i class="radio-icon ion-checkmark"></i>
+            </label>   
           </div>
         </div>
       </div>     
 
-        <label class="item item-input">
+        <label class="item item-input item-select">
           <span class="input-label">Type</span>
-          <input type="text">
+          <select ng-model="requestInfo.SELECT">
+            <option>Paper</option>
+            <option>DustBin</option>
+            <option selected>Other</option>
+          </select>
         </label>
 
-        <h5 style="text-align: center;">The price will be ... €</h5>
+      <h5 style="text-align: center;">The price will be ... €</h5>
 
-		<div class="item item-divider">
-		   Pickup address and time : 
-		</div>
-        <label class="item item-input">
-          <span class="input-label">Hour </span>
-          <input type="text" >
-        </label>    
+  		<div class="item item-divider">
+  		   Pickup address and time : 
+  		</div>      
+
+      <div class="row">
+        <div class="col col-25">
+            <span class="input-label" >Date</span>
+        </div>
+        <div class="col" id="lowerBoundHour">
+          <input type="date" ng-model="requestInfo.date">  
+        </div>
+      </div> 
+
+      <div class="row">
+        <div class="col col-20">
+            <span class="input-label">Hour range</span>
+        </div>
+        <div  id="lowerBoundHour" class="col col-25"> 
+          <input type="time" ng-model="requestInfo.lowerTime" value="00:00:00">  
+        </div>
+        <div class="col col-10" style="margin-top: 10px;">
+          <i class="icon ion-minus-round"></i>
+        </div>
+        <div id="upperBoundHour" class="col col-25">
+          <input type="time" ng-model="requestInfo.upperTime" value="00:00:00">  
+        </div>
+      </div> 
 
         <ion-toggle ng-checked="mine.checked" ng-model="mine.checked" ng-change="showForm()">
          	Use my address
         </ion-toggle>
 
-        <a ui-sref="app.map">TEST</a>
         <div id="form" style="display: none;">
+        <a ui-sref="app.map">TEST</a>
           <div class="row">
               <div class="col col-25">
                 <label class="item item-input">

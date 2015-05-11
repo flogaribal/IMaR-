@@ -15,11 +15,14 @@
       <input type="password" ng-model="loginData.password">
     </label>
     <label class="item">
-      <button class="button button-block button-positive" type="submit"  ui-sref="app.pendingRequests">Log in</button>
+      <button class="button button-block button-positive" type="submit"  >Log in</button><!-- ui-sref="app.pendingRequests" -->
     </label>
 
   </div>
 </form>
+<div id="ConnexionError" style="display:none;color:red;">
+  Invalid password and/or username.
+</div>
 <a class="button button-full button-clear button-positive" ui-sref="signUp"> Sign up</a>
 
 

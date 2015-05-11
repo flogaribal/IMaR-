@@ -26,7 +26,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
   .state('login', {
     url: "/login",
     templateUrl: "templates/login.html",
-    //controller : "loginCtrl"
+    controller : "LoginCtrl"
   })
 
   .state('app', {

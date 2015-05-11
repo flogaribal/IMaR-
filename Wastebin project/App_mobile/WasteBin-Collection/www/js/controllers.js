@@ -1,40 +1,23 @@
 angular.module('starter.controllers', [])
 
 
+/* ______________________ LOGIN CTRL ______________________*/
+.controller('LoginCtrl', function($scope, $ionicModal, $timeout, $state) {
+  $scope.loginData = {};
+  // Perform the login action when the user submits the login form
+  $scope.doLogin = function() {
+    //alert($scope.loginData.username + "     " + $scope.loginData.password);
+    if(($scope.loginData.username == null || $scope.loginData.username == "") && ($scope.loginData.password == null || $scope.loginData.password == "")){
+      $state.transitionTo("app.pendingRequests");
+    }else{
+      document.getElementById("ConnexionError").style.display = 'block';        
+    }
+  };
+})
 
 /* ______________________ APP CTRL ______________________*/
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
-  // Form data for the login modal
-  $scope.loginData = {};
-
-  // Create the login modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/login.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
-
-  // Triggered in the login modal to close it
-  $scope.closeLogin = function() {
-    $scope.modal.hide();
-  };
-
-  // Open the login modal
-  $scope.login = function() {
-    $scope.modal.show();
-  };
-
-  // Perform the login action when the user submits the login form
-  $scope.doLogin = function() {
-    console.log('Doing login', $scope.loginData);
-    alert("TEST");
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
-    $timeout(function() {
-      $scope.closeLogin();
-    }, 1000);
-  };
 })
 
 /* ______________________ NEW_REQUEST CTRL ______________________*/
@@ -55,16 +38,18 @@ angular.module('starter.controllers', [])
   }
 
 
-  $scope.unitList = [
-        { text: "Kilogram", value: "kg" },
-        { text: "Pound", value: "£" }
-  ];
   $scope.pushNotificationChange = function() {
       alert('Push Notification Change: '+ $scope.pushNotification.checked);
   };
   
   $scope.pushNotification = { checked: true };
   $scope.emailNotification = 'Subscribed';
+
+  $scope.requestInfo = {};
+  $scope.addRequest = function(){
+    alert($scope.requestInfo.weight + "   " + $scope.requestInfo.pounds + "    "+ $scope.requestInfo.SELECT );
+    alert($scope.requestInfo.date + "    "+ $scope.requestInfo.lowerTime + "    "+ $scope.requestInfo.upperTime);
+  }
 })
 
 /* ______________________ PENDING_REQUESTS CTRL ______________________*/
