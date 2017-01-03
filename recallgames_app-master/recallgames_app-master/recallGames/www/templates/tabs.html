@@ -1,0 +1,44 @@
+<div class="bar-header" style="height:20%; width:90%">
+          <!-- <h1 style="color:red"> hello </h1> -->
+          <!-- <img src="img/tafisa_header.png" alt="TAFISA LOGO" style="width:90%" /> -->
+          <img class="headerImage" alt="TAFISA LOGO" style="margin:3%"/>
+          
+</div>
+
+<hr class="headerShade"/>  
+
+<!-- TABS  --> <!-- tabs-icon-top tabs-top tabs-color-active-positive tabs-positive tabs-icon-only-->
+<ion-tabs tabs-swipable  class="tabs-icon-top tabs-color-active-positive" ng-controller="CollectionCtrl">
+
+<!-- HOME TAB -->
+<ion-tab title="Home" icon-on="ion-ios-home" icon-off="ion-ios-home-outline" ui-sref="home">
+    <ion-nav-view name="home"></ion-nav-view>
+</ion-tab>
+
+ <!-- Collection Tab -->
+<ion-tab  title="Collection" icon-off="ion-ios-keypad-outline" icon-on="ion-ios-keypad" ng-click="collectionGames()">
+   <ion-nav-view name="tab-collection"></ion-nav-view>
+</ion-tab>
+
+   <!-- Map Tab -->
+<ion-tab title="Map" icon-off="ion-map" icon-on="ion-map" ng-click="mapGames()">
+  <ion-nav-view name="tab-map"></ion-nav-view>
+</ion-tab>
+
+<!-- Profile Tab -->
+ <ion-tab title="Random" icon-off="ion-shuffle" icon-on="ion-shuffle" ng-click="randomGame()">
+  <ion-nav-view name="tab-random"></ion-nav-view>
+</ion-tab>
+
+<!-- Profile Tab -->
+ <ion-tab title="Profile" icon-off="ion-person" icon-on="ion-person" ng-click="connected()">
+  <ion-nav-view name="tab-login"></ion-nav-view>
+</ion-tab>
+
+
+  <!-- Other Tab -->
+  <ion-tab title="Other" icon-off="ion-android-more-horizontal" icon-on="ion-android-more-horizontal" ui-sref="tab.other">
+    <ion-nav-view name="tab-other"></ion-nav-view>
+  </ion-tab>
+
+</ion-tabs>

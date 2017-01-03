@@ -1,0 +1,298 @@
+<ion-view view-title="Game Detail">
+  	<ion-content>
+  			<div class= "marginBottom">
+	  		<div class="row">
+	  			<!-- CASE RANDOM FALSE -> DISPLAY LEFT ARROW TO GO BACK TO GAMES LIST -->
+
+
+		  		<div ng-if="!noArrow">	  		
+				  	<div class="col col-20">
+				  		<ion-item class="item item-icon-left" ng-click="goBack()" style="border:0">
+				  			<i class="icon ion-arrow-left-c"></i>
+				  		</ion-item>
+				  	</div>
+				</div>
+				<!-- GAME TITLE -->
+			  	<div class="col col-80" ng-if="titleExists==true">
+			  		<h2 class="gameTitle" >{{ currGame.title }}</h2> 
+			  		<div ng-if="currGame.subtitle !== ''" class="textCenter">
+			  			({{currGame.subtitle}})
+			  		</div>
+			  	</div>
+		
+			</div> <!-- end of class row -->
+			<!-- Social Share -->
+			  	<div class="row">
+					<div class="col col-80">
+
+						<div class="" ng-if="displaySocialShare==true" style="display:block">				
+						<div class="card_social">
+							<a class="share-icon facebook" href="http://www.facebook.com/sharer.php?u={{shareURL}}" target="_blank">
+								<span class="ion-social-facebook"></span>
+							</a>
+							<a class="share-icon twitter" href="https://twitter.com/share?url={{shareURL}}&text={{currGame.title}} - {{currGame.subtitle}}&hashtags=RecallGames,TraditionalGames,TSG" target="_blank">
+								<span class="ion-social-twitter"></span>
+							</a>
+							<a class="share-icon googleplus" href="https://plus.google.com/share?url={{shareURL}}" target="_blank">
+								<span class="ion-social-googleplus"></span>
+							</a>
+						</div>
+					</div>	
+
+						
+					</div>
+					<div class="col col-20">
+					<div class="card_share">
+						<div class="icon-share" ng-if="displayShareIcon==true" style="visibility:visible">				
+							<i id="share" class="ion-android-share-alt share-icon" ng-click="showSocial()"></i>
+						</div>
+						<div class="icon-close" ng-if="displayShareIcon==false" style="visibility:visible">				
+							<i id="share" class="ion-android-close share-icon"  ng-click="hideSocial()"></i>
+						</div>
+						
+					</div>
+					</div>
+			
+				</div> <!-- end of social share -->		
+
+		
+			<!-- DIVIDER BETWEEN SPORT NAME AND OTHER INFORMATION -->
+		  	<div class="gameDetailDivider item item-divider">
+
+		  			<div class="row" id="dividerContent" ng-if="displayGameBox==false">
+						<div class="row">
+		  			<!-- HOME BUTTON -->
+			  			<div class="col col-20" >
+			  				<i id='gridButton-{{state}}' class="icon ion-grid gridHomeButton" style="display:block" ng-click="goHomeGame()"></i>
+			  			</div>
+			  		<!-- CATEGORY TITLE -->
+			  			<div class="col col-80"  id='dividerTitle' ng-bind-html="trustedHtml">
+			  			
+		  				<!-- <span class="dividerTitle">{{dividerTitle}}</span> -->
+		  				</div>
+		  			</div>
+		  		</div>	
+		  	</div>
+
+
+		  	<!-- INFORMATION BOX -> CLICK TO DISPLAY CONTENT -->
+		  	<div id='gameHome' ng-if="displayGameBox==true">
+		  		<ion-scroll>
+				  	<div class="row">
+					  	<div class="col sportBox button" style="background-color:#bf1e2b;" ng-click="showBasics()">BASICS</div>
+					  	 <div class="col sportBox button" style=" background-color:#B20059;" ng-click="showHowToPlay()">HOW TO PLAY</div>
+					 	<div class="col sportBox button" style="background-color:#2baf2b;" ng-click="showUniversalAccess()">ACCESS</div>
+					</div>
+					 <div class="row">
+						<div class="col sportBox button" style="background-color:#E5C00E;font-size:95%" ng-click="showBackground()">BACKGROUND</div>
+					  	<div class="col sportBox button" style="background-color:#ef7a1f;" ng-click="showPicturesMovies()">PICTURES & VIDEOS</div>
+					  	<div class="col sportBox button" style="background-color:#11c1f3;" ng-click="showGameCard()">GAMECARD</div> 
+					</div>
+				</ion-scroll>
+			</div>	
+
+
+
+				<!-- BASIC CONTENT -> NOT DISPLAYED AT THE BEGINNING -->
+			<div id='basics' ng-if="displayBasics==true" style="display:block">
+				<div class="row">
+					<span class="bold col col-33">Type of game : </span> 
+					<span class="col">{{ currGame.type.title }}</span>
+
+					<div ng-if="currGame.one_player == '1'" class="nbPlayers">
+						<div class=" button-block button-dark txtNbPlayers" >One player</div>	
+					</div>
+					<div ng-if="currGame.two_player == '1'" class="nbPlayers">
+						<div class=" button-block button-dark txtNbPlayers">Two player</div>	
+					</div>
+					<div ng-if="currGame.multi_player == '1'" class="nbPlayers">
+						<div class=" button-block button-dark txtNbPlayers">Multiplayer</div>
+					</div>
+					</div>
+
+				<div class="row">				
+					<span class="bold col col-33">Aim of game : </span> 
+					<span class="col" ng-bind-html="currGame.aim">{{ currGame.aim }}</span>
+				</div>	
+		
+				<div class="row">
+					<span class="bold col col-33">Equipment : </span> 
+					<span class="col" ng-bind-html="currGame.equipment_text"> {{currGame.equipment_text}}</span>
+				</div>
+				<div class="row">
+					<span class="bold col col-33">Age : </span> 
+					<span ng-if="currGame.age_max<'100'" class="col" > {{currGame.age_min}}-{{currGame.age_max}}</span>
+					<span ng-if="currGame.age_max>='100'" class="col" > {{currGame.age_min}}+</span>
+				</div>
+				<div class="row">
+					<span class="bold col col-33">Difficulty :</span>
+					<span ng-if="currGame.difficulty == '0'" >
+						<span class="col">Easy</span>	
+					</span>
+					<span ng-if="currGame.difficulty == '1'" >
+						<span class="col">Medium</span>	
+					</span>
+					<span ng-if="currGame.difficulty == '2'"  class="nbPlayers">
+						<span class="col">Hard</span>
+					</span>
+				</div>
+				<div class="row">
+					<span class="bold col col-33">Area :
+					</span> 
+					<span class="col" ng-bind-html="currGame.area">{{currGame.area}} <br>
+						<span ng-if="currGame.indoor == '1'" class="nbPlayers">
+							<span class=" button-block button-dark txtNbPlayers textCenter">Indoor</span>	
+						</span>
+						<span ng-if="currGame.outdoor == '1'"  class="nbPlayers">
+							<span class=" button-block button-dark txtNbPlayers textCenter" >Outdoor</span>
+						</span>
+					</span>
+				</div>
+				<br>
+				<div class="row">
+					<span class="bold col col-33">Motor skills :</span>
+					<div style="display:block;">
+						<span ng-repeat="skill in skills | filter:{cat_id:'1'}" class="skills">
+							<span class=" button-block button-dark txtSkills textCenter" >{{skill.title}}</span>	
+						</span>
+					</div>
+
+				</div>
+				<br>
+				<div class="row">
+					<span class="bold col col-33">Social skills :</span>
+					<div style="display:block;">					
+						<span ng-repeat="skill in skills | filter:{cat_id:'2'}" class="skills">
+							<span class=" button-block button-dark txtSkills textCenter">{{skill.title}}</span>	
+						</span>
+					</div>
+
+				</div>
+				<br>
+				<div class="row">
+						<span class="bold col col-33">Cognitive skills :</span>
+					<div style="display:block;">
+						<span ng-repeat="skill in skills | filter:{cat_id:'3'}" class="skills" >
+							<span class=" button-block button-dark txtSkills textCenter">{{skill.title}}</span>	
+						</span>
+					</div>
+
+				</div>
+
+				
+			</div> <!-- end of showBasics -->
+
+
+<!-- HOW TO PLAY CONTENT -> NOT DISPLAYED AT THE BEGINNING -->
+			<div id='howToPlay' ng-if="displayHowToPlay==true" style="display:block" >
+				<div class="row">
+					<span class="bold col col-20">Setup : </span> 
+					<span class="col" ng-bind-html="currGame.setup">{{currGame.setup}}</span>
+				</div>
+				<div class="row">
+					<span class="bold col col-20">Rules : </span> 
+					<span class="col" ng-bind-html="currGame.rules">{{currGame.rules}}</span>
+				</div>
+			</div> <!--end of displayHowToPlay-->
+
+
+<!-- UNIVERSAL ACCESS CONTENT -> NOT DISPLAYED AT THE BEGINNING -->
+			<div id='universalAccess' ng-if="displayAccess==true" style="display:block" >
+				<div class="marginTop4">
+					<span class="bold">Teaching Styles : </span>
+				</div>
+				<div class="row" ng-bind-html="currGame.ua_teaching">
+					{{currGame.ua_teaching}}
+				</div>
+				<div class="marginTop4">
+					<span class="bold">Rules : </span> 
+				</div>
+				<div class="row" ng-bind-html="currGame.ua_rules">
+					{{currGame.ua_rules}}
+				</div>
+				<div class="marginTop4" >
+					<span class="bold">Environment : </span> 
+				</div>
+				<div class="row" ng-bind-html="currGame.ua_environment">
+					{{currGame.ua_environment}}
+				</div>
+				<span ng-if='currGame.ua_equipment !== ""'>
+					<div class="marginTop4" >
+						<span class="bold">Equipment : </span> 
+					</div>
+					<div class="row" ng-bind-html="currGame.ua_equipment">
+						{{currGame.ua_equipment}}
+					</div>
+				</span>
+			</div> <!--End of display Access -->
+
+		<!-- BACKGROUND CONTENT -> NOT DISPLAYED AT THE BEGINNING -->
+			<div id='background' ng-if="displayBackground==true" style="display:block">
+				<div class="row">		
+					<span class="bold">Background : </span>
+				</div>
+				<div class="row" ng-bind-html="currGame.background">
+					{{currGame.background}}
+				</div>
+			</div> <!-- end of background -->
+
+		<!-- PICTURES & MOVIES CONTENT -> NOT DISPLAYED AT THE BEGINNING -->
+			<div id='picturesMovies'  ng-if="displayPicsVideos==true" style="display:block">
+				 <ion-list>
+				           
+					<div ng-if="currGame.image == null && currGame.video == ''" class="textCenter bold">
+		            	Neither Picture Nor Video Found
+		            </div>
+		   
+					<div ng-if="currGame.video == ''" class="textCenter bold">
+		            	No Video Found
+		            </div>
+	      
+				<ion-item>
+				<!-- Movie -->
+					<div ng-if="currGame.video != ''" class="video-container">
+						<div class="noUTvideo" ng-if="hasYTvideo==false" style="display:block">
+							<div id="videoLink"><a href="{{videoURL}}" style="text-decoration:none">Click here to watch the Video </a></div>
+						</div>
+						<!-- YOUTUBE Movie -->               
+                    		<iframe class="youtube-player" ng-src="{{videoURL}}" frameborder="0"></iframe>
+                    
+        
+		                </div>
+		         </ion-item>
+
+
+				<ion-item>
+					<div ng-if="currGame.image == null" class="textCenter bold">
+			           	No Picture Found
+			        </div>
+			    </ion-item>
+			    
+			    <ion-item>
+			            	<!-- Picture -->
+						<div ng-if="currGame.image != null" class="item item-image gameImage" >
+							<img ng-src="{{domain}}/content/images/{{currGame.image.file}}" />
+						</div>
+					
+				</ion-item>
+
+		         </ion-list>
+
+			</div> <!-- end of pictures and videos div -->
+
+			<!-- GAMECARD CONTENT -> NOT DISPLAYED AT THE BEGINNING -->
+			<div id='gameCard' ng-if="displayGameCard==true" style="display:block">
+				
+					<div id=ng-if="displayImgCard==true" style="display:block">
+						<div id="linkGameCard" class="item item-image gameImage" ng-click="downloadPDF()" ng-if="displayError==false" style="display:block">
+							<img id="imgGameCard" ng-src="{{gameCard_TNail_URL}}" /> 
+							<p>Click to download the gameCard</p>
+						</div>
+					</div>
+				<p id="error" ng-if="displayError==true" style="display:block" class="textCenter bold">No game card found</p>
+			</div>
+			</div>	
+			
+								
+	</ion-content>
+</ion-view>

@@ -1,0 +1,90 @@
+<ion-content class="backSignUp">
+    <div class="bar bar-header headerBarSignUp">
+        <button class="button icon ion-arrow-left-c backButtonSignUp" ui-sref="tab.login"></button>
+        <span class="textCenter">
+            <h1 class="title">Sign up !</h1>
+        </span>
+    </div>
+
+    <div id="form" class="padding">
+
+    <!-- FORM CONTENT -->
+      	<div class="item item-divider signUpForm">
+            Personnal information :
+        </div>
+        <label class="item item-input signUpForm">
+            <span class="input-label">Username</span>
+            <input type="text" ng-model="newUserInfo.username" required>
+        </label>  
+       <!--  <label class="item item-input signUpForm">
+            <span class="input-label">First name</span>
+            <input type="text" ng-model="newUserInfo.firstName" required>
+        </label>            
+
+        <label class="item item-input signUpForm">
+            <span class="input-label">Last name</span>
+            <input type="text" ng-model="newUserInfo.lastName" required>
+        </label>
+
+        <label class="item item-input signUpForm">
+            <span class="input-label">Date of birth</span>
+            <input type="date" ng-model="newUserInfo.dOB" >
+        </label>
+
+        <label class="item item-input signUpForm">
+            <span class="input-label">Mail</span>
+            <input type="email" ng-model="newUserInfo.mail" >
+        </label>
+
+        <label class="item item-input signUpForm">
+            <span class="input-label">Phone number</span>
+            <input type="tel" ng-model="newUserInfo.phoneNumber" >
+        </label>
+ -->
+        <label class="item item-input signUpForm">
+            <span class="input-label">Password</span>
+            <input type="password" ng-model="newUserInfo.password" required>
+        </label>
+
+
+
+        
+       <!--  <div class="item item-divider signUpForm">
+            Personnal Address :
+        </div>
+
+
+        <div class="row signUpForm">
+            <div class="col col-33">
+          	    <label class="item item-input">
+                    <input type="tel" placeholder="Num" ng-model="newUserInfo.streetNumber">
+                </label> 
+            </div>
+            <div class="col ">
+        	      <label class="item item-input">
+                  <input type="text" placeholder="Street name" ng-model="newUserInfo.streetName" >
+                </label> 
+            </div>
+        </div>
+        <div class="row signUpForm">
+            <div class="col">
+          	    <label class="item item-input">
+                  <input type="text" placeholder="City" ng-model="newUserInfo.city" >
+                </label>  
+            </div>
+            <div class="col">
+            	  <label class="item item-input">
+                  <input type="text" placeholder="County" ng-model="newUserInfo.county" >
+                </label>
+            </div>
+        </div> -->
+
+
+        <button class="button button-block button-positive" ng-click="signUp()">OK</button>
+    </div>
+
+    <div id="SignUpError" class="usernameError textCenter">
+            This username is already taken.
+    </div>
+
+</ion-content>

@@ -1,0 +1,50 @@
+<ion-view view-title="Login">
+    <ion-content class="loginContent">
+        <!-- <div class="hero no-header flat" style="height:initial"> -->
+        <div class="greetDiv">
+                <h1 class="greetUser">Welcome</h1>
+        </div>
+
+        <ng-controller="TabProfileCtrl"></ng-controller>
+		
+		<!-- LOGIN FORM  -->
+        <div class="padding">
+	    	<label class="item item-input topFieldForm">
+	     	 	<span class="input-label">Username</span>
+	      		<input type="text" autocomplete="off" ng-model="loginData.username"> 
+	    	</label>
+	    	<label class="item item-input bottomFieldForm">
+	      		<span class="input-label">Password</span>
+	     	 	<input type="password" autocomplete="off" ng-model="loginData.password">
+	   	 	</label>
+	   	 </div>
+	   		
+	   	<!-- LOGIN BUTTON -->
+        <div class="padding">
+            <button ng-click="doLogin()" class="button button-full button-assertive ink">Login</button>
+        </div>
+
+
+
+        <!-- ERROR CASES -->
+        <div id="UsernameConnexionError" class="padding textCenter error">
+		  	None user found with this username.
+		</div>
+		
+		<div id="UsernamePasswordConnexionError" class="padding textCenter error" ng-if="errorDisplay==true" style="display:block">
+		  	Invalid user and/or password.
+		</div>
+
+
+		<!-- SIGN UP BUTTON -->
+		<div class="textCenter" ng-hide="isIOS">
+			<a class="button button-half button-clear button-dark" ng-click="forgotPassword()" >Forgotten your password?</a>
+		</div>
+
+		<!-- SIGN UP BUTTON -->
+		<div class="textCenter" ng-hide="isIOS">
+			<a class="button button-half button-clear button-dark" ng-click="signUp()">Create an account?</a>
+			
+		</div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,69 @@
+<ion-view view-title="Profile">
+ <!--    <ion-content ng-class="{expanded:$scope.isExpanded}"> -->
+    <ion-content class="loginContent">
+        <!-- HEADER WITH USERNAME -->
+        <!-- <div class="profileHeader hero slide-up"> -->
+            <div class="userTitleDiv">
+                <h3 class="userTitle">{{username}} </h3>
+               
+            </div>
+        <!-- </div> -->
+
+        <!-- TABS MY GAMES AND SETTINGS -->
+        <div class="tabs tabs-energized tabs-icon-top static">
+            <a id="myGamesTab" ng-click="goMyGames()" class="tab-item" style="color:#008000; font-weight: bold; font-size:15px; letter-spacing: 2px; text-decoration:underline overline">
+                <i class="icon ion-android-apps"></i> My Games
+            </a>
+            <a id="settingsTab" ng-click="goSettings()" class="tab-item" style="color:#000000; font-weight: bold; font-size:15px; letter-spacing: 2px; text-decoration:underline overline">
+                <i class="icon ion-gear-a"></i> Settings
+            </a>
+        </div>
+
+  <!-- IF LOG OUT IS NOT NAVIGATED THEN SHOW GAME BOXES -->
+        <div ng-if="showLogOut==false" style="display:block">
+
+                <!-- INFORMATION TO ADD GAMES VIA WEBSITE -->
+                <div class="textCenter" style="margin:0">
+               <!--  button button-half button-clear button-darkbutton button-full button-positive -->
+                    <p class="card bar-positive"> <a ng-click="manageGames()" >Click Here To Manage Your Gamebox(es) on RecallGames.com</a> </p>
+                     
+                    
+                </div>
+
+                <!-- MY GAMES CONTENT --> 
+                <div id="myGames" class="gamesContent">
+                   <div class="card profileCard">
+                        <div class="item item-text-wrap" style="padding: 0px;">
+                            
+                            <!-- IF THERE ISN'T ANY SAVED GAMES -->
+                            <div ng-if="gamesBoxes == ''" class="textCenter bold">
+                                NO GAMEBOX FOUND
+                            </div>
+
+                            <ion-list>
+                                <ion-item ng-repeat="currGameBox in gamesBoxes" ui-sref='tab.profile-game-collection({gameBoxId:currGameBox.id})'  style="border: 1px solid #ddd; font-weight: bold; font-size:15px; letter-spacing: 2px;">
+                                    {{currGameBox.title}}
+                                </ion-item>
+                            </ion-list>
+
+                        </div>
+                        <div ng-if="gamesBoxes.length > 0" class="item item-divider" style="vertical-align:center;">
+                            <p ng-if="gamesBoxes.length < 2" class="nbGameBoxes">{{gamesBoxes.length}} Game Box</p>
+                            <p ng-if="gamesBoxes.length > 1" class="nbGameBoxes">{{gamesBoxes.length}} Game Boxes</p>
+                        </div>
+                    </div>
+                </div>
+
+
+                </div>  
+
+        <!-- SETTINGS CONTENT -> DISPLAY NONE DEFAULT -->
+        <div id="settings" ng-if="showLogOut==true" style="display:block">
+                <!-- LOGIN BUTTON -->
+                <div class="padding">
+                    <button ng-click="logOut()" class="button button-full button-assertive ink">Log Out</button>
+                </div>
+         </div>
+
+    </ion-content>
+</ion-view>

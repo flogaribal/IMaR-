@@ -1,0 +1,38 @@
+<ion-view view-title="Collection">
+	<ion-content >
+	<div class= "marginBottom">
+
+		<!-- BACK BUTTON FOR NAVIGATION TO BE USED BY MAP AND PROFILE PAGE -->
+		<div class="backShowCondition" ng-if="countryId!=null || gameBoxId!=null">
+				<div class="row">
+				  		<ion-item class="item item-icon-left" ng-click="goBack()" style="border:0">
+				  			<i class="icon ion-arrow-left-c"></i>
+				  		</ion-item>
+				  </div>
+		</div>
+			
+		
+		<!-- SEARCH BAR FOR ALL GAMES COLLECTION PAGE -->
+		<div class="searchShowCondition" ng-if="countryId==null && gameBoxId==null">
+			<ion-header-bar class="bar-light bar-subheader subBarCollection">
+				<span class="row">
+	      			<input class="col col-80" type="search" placeholder="Search games..." ng-model="search.txt" style="padding-top:0">
+		      		<button ng-if="search.txt.length" class="searchBarCrossButton col button button-icon ion-android-close input-button " ng-click="clearSearch()">
+	      		</button>
+	      		</span>
+    		</ion-header-bar>
+	  	</div>
+
+	  	<!-- LIST GAME ACCORDING TO -> SEARCH FILTER || COUNTRY || GAME BOX PROFILE -->
+		<div class="row gameGrid"> 
+			<div id="listGames" class="col col-33" ng-repeat="game in games | filter:myFilter(search.txt)">
+				
+				<div id="{{ $index+'-'+ state }}" class="col sportBox button" ng-click="moveOnDetail( {{game.id}} )" style="background-color: {{game.color}}">{{game.title}}</div>
+				
+			</div>
+		</div>
+
+		
+		</div> <!-- END OF MARGIN BOTTOM DIV -->
+	</ion-content>
+</ion-view>
